@@ -1,8 +1,9 @@
+import Body from "./Body"
 
 const App = () => {
   return (
     <>
-      <h1>LinkToDev</h1>
+      <Body />
     </>
   )
 }
