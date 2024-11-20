@@ -1,11 +1,14 @@
+import { useSelector } from "react-redux"
 
 const Navbar = () => {
+  const user = useSelector(store=>store.user)
 return (
 <div className="navbar bg-base-100">
   <div className="flex-1">
     <a className="btn btn-ghost text-xl">LinkToDev</a>
   </div>
-  <div className="flex-none gap-2">
+  { user && <div className="flex-none gap-2">
+    <div>{user.firstName}</div>
     <div className="dropdown dropdown-end mx-4">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
@@ -27,7 +30,7 @@ return (
         <li><a>Logout</a></li>
       </ul>
     </div>
-  </div>
+  </div>}
 </div>
     
     
