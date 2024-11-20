@@ -27,7 +27,7 @@ const Login = () => {
       );
   
       //console.log(data);
-      if(!response) return;
+      if(!response.data) return;
       dispatch(addUser(response.data))
       navigate("/feed")
 
