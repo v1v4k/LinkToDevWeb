@@ -1,16 +1,27 @@
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { addUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+
 
 
 const Login = () => {
   const [emailId, setEmailId] = useState("Vivek@gmail.com");
   const [password, setPassword] = useState("Vivek@123");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+ const navigate = useNavigate();
+ const user = useSelector((state) => state.user);
+
+ useEffect(() => {
+  // Redirect if already logged in
+  if (user) {
+      navigate("/feed"); // Redirect to homepage if user is logged in
+  }
+}, [user, navigate]);
+
+  
  
 
   const handleLogin = async () => {
@@ -28,8 +39,8 @@ const Login = () => {
   
       //console.log(data);
       if(!response.data) return;
-      dispatch(addUser(response.data))
-      navigate("/feed")
+      dispatch(addUser(response.data));
+      navigate("/feed");
 
     }
     catch(error){
@@ -38,8 +49,9 @@ const Login = () => {
     
   };
 
-  return (
-    <div className="card bg-primary text-primary-content w-96 mx-[40%] my-[5%]">
+
+ return (
+    <div className="card bg-base-300 text-white w-96 mx-[40%] my-[5%]">
       <div className="card-body flex  flex-col items-center ">
         <h2 className="card-title">Sign In</h2>
         <div>
@@ -62,7 +74,7 @@ const Login = () => {
             </div>
           </label>
         </div>
-        <button className="btn" onClick={handleLogin}>
+        <button className="btn w-48" onClick={handleLogin}>
           Sign In
         </button>
       </div>

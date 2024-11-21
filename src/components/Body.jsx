@@ -20,6 +20,7 @@ const Body = () => {
       if (!response.data) return;
       //console.log(response.data);
       dispatch(addUser(response.data));
+      navigate("/feed");
     } catch (error) {
       if(error.status===401){
         navigate("/login")
@@ -28,7 +29,7 @@ const Body = () => {
   };
 
   useEffect(() => {
-    if(user) return;
+    if(!user) return;
     fetchUser();
   }, []);
 
