@@ -7,16 +7,14 @@ import { addFeed } from "../redux/feedSlice";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const feed = useSelector((store) => store?.feed?.feed);
+  const feed = useSelector((store) => store?.feed);
   const fetchFeed = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/user/feed`, {
         withCredentials: true,
       });
 
-      if (!res) return;
-      //console.log(res.data);
-      dispatch(addFeed(res.data));
+      dispatch(addFeed(res?.data?.feed));
     } catch (error) {
       console.log(error.message);
     }
@@ -25,12 +23,14 @@ const Feed = () => {
   useEffect(() => {
     fetchFeed();
   }, []);
-
-  if(!feed) return;
+  
+  if (!feed) return "Hello";
 
   return (
     <div className="flex justify-center my-16">
-      {feed.map(feed => <FeedCard key={feed} user={feed} />)}
+      {feed.map((feed) => (
+        <FeedCard key={feed._id} user={feed} />
+      ))}
     </div>
   );
 };

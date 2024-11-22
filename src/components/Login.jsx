@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("Vivek@gmail.com");
-  const [password, setPassword] = useState("Vivek@123");
+  const [emailId, setEmailId] = useState("Ashish@gmail.com");
+  const [password, setPassword] = useState("Ashish@123");
   const dispatch = useDispatch();
  const navigate = useNavigate();
  const user = useSelector((state) => state.user);
@@ -17,7 +17,7 @@ const Login = () => {
  useEffect(() => {
   // Redirect if already logged in
   if (user) {
-      navigate("/feed"); // Redirect to homepage if user is logged in
+      navigate("/"); // Redirect to homepage if user is logged in
   }
 }, [user, navigate]);
 
@@ -40,7 +40,7 @@ const Login = () => {
       //console.log(data);
       if(!response.data) return;
       dispatch(addUser(response.data));
-      navigate("/feed");
+      navigate("/");
 
     }
     catch(error){

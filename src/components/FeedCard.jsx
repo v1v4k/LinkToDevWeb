@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 const FeedCard = ({ user }) => {
   
-
+  if(!user) return;
   const { firstName, lastName, age, gender, photoUrl, about } = user;
 
  

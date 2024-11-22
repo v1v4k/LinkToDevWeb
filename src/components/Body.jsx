@@ -20,7 +20,7 @@ const Body = () => {
       if (!response.data) return;
       //console.log(response.data);
       dispatch(addUser(response.data));
-      navigate("/feed");
+      navigate("/");
     } catch (error) {
       if(error.status===401){
         navigate("/login")
