@@ -29,7 +29,7 @@ const Connections = () => {
   
  
 
-  if(!userConnections || userConnections.length === 0) return ;
+  if(!userConnections || userConnections.length === 0) return (<h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1>);
  
   return (
     <div >

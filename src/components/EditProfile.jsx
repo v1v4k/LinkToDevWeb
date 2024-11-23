@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import FeedCard from "./FeedCard";
 import { useEffect, useState } from "react";
 import axios from "axios";

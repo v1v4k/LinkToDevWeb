@@ -27,13 +27,13 @@ const Requests = () => {
   
   const RequestCard = CardForRequest(ConncectionCard);
 
-  if(!userRequests || userRequests.length === 0) return ;
+  if(!userRequests || userRequests.length === 0) return (<h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1>) ;
 
  // console.log(userRequests[0]?.fromUserId )
   return (
     <>
         <h2 className="text-2xl font-bold text-center m-2 p-2">Requests</h2>
-        <RequestCard data={userRequests[0]?.fromUserId} />    
+        <RequestCard data={userRequests[0]} />    
     </>
   );
 };

@@ -4,7 +4,6 @@ const FeedCard = ({ user }) => {
   if(!user) return;
   const { firstName, lastName, age, gender, photoUrl, about } = user;
 
- 
 
   return (
     <div className="card bg-base-300 w-96 shadow-xl m-2">
