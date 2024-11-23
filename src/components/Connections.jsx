@@ -25,20 +25,24 @@ const Connections = () => {
 
   useEffect(() => {
     fetchConnections();
-  }, []); 
-  
- 
+  }, []);
 
-  if(!userConnections || userConnections.length === 0) return (<h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1>);
- 
+  if (!userConnections || userConnections.length === 0)
+    return (
+      <h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1>
+    );
+
   return (
-    <div >
-    <h2 className="text-2xl font-bold text-center m-2 p-2">Connections</h2>
-    <div className="flex justify-center">
-        {
-        userConnections.map(connection => <ConncectionCard key = {connection._id} data = {connection}/>)
-    }
-    </div>
+    <div>
+      <h2 className="text-2xl font-bold text-center m-2 p-2">Connections</h2>
+      <div className="">
+        {userConnections.map((connection) => (
+          <div className="m-1 p-1 flex justify-center" key={connection._id}>
+            {" "}
+            <ConncectionCard data={connection} />{" "}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
