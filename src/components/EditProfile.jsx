@@ -12,19 +12,29 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age);
   const [gender, setGender] = useState(user.gender);
   const [about, setAbout] = useState(user.about);
+  const [error, setError] = useState("");
   //const [skills, setSkills] = useState(user.skills);
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
 
   const updateProfile = async () => {
-    const res = await axios.patch(
-      `${BASE_URL}/profile/edit`,
-      { firstName, lastName, age, gender, about, photoUrl },
-      {
-        withCredentials: true,
-      }
-    );
-    dispatch(addProfile(res?.data?.data));
+    try {
+      const res = await axios.patch(
+        `${BASE_URL}/profile/edit`,
+        { firstName, lastName, age, gender, about, photoUrl },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(addProfile(res?.data?.data));
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+    } catch (error) {
+      //console.error("Error occurred while updating profile:", error);
+      setError(error.response.data);
+    }
   };
 
   useEffect(() => {
@@ -106,18 +116,26 @@ const EditProfile = ({ user }) => {
                 onChange={(e) => setPhotoUrl(e.target.value)}
               />
             </div>
+            <p className="text-red-500">{error}</p>
 
             <div className="form-control mt-6">
-              <button
-                className="btn btn-primary"
-                onClick={updateProfile}
-              >
+              <button className="btn btn-primary" onClick={()=>{
+                updateProfile();
+                setShowToast(true)}
+              }>
                 Update Profile
               </button>
             </div>
           </form>
         </div>
       </div>
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>Profile updated successfully.</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };

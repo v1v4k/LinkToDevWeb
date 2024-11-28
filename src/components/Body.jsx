@@ -8,29 +8,31 @@ import { addUser } from "../redux/userSlice";
 import { useEffect } from "react";
 
 const Body = () => {
-  const user = useSelector(store=>store.user)
+  const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
+      if(user) return;
       const response = await axios.get(`${BASE_URL}/profile`, {
-          withCredentials: true,
-        });
+        withCredentials: true,
+      });
 
       if (!response.data) return;
       //console.log(response.data);
       dispatch(addUser(response.data));
-      navigate("/");
+      //navigate("/");
     } catch (error) {
-      if(error.status===401){
-        navigate("/login")
+      if (error.status === 401) {
+        navigate("/login");
       }
+      console.error("Error occurred while fetching feed:", error);
+     
     }
   };
 
   useEffect(() => {
-    if(!user) return;
-    fetchUser();
+      fetchUser();
   }, []);
 
   return (

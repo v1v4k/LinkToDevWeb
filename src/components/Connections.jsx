@@ -5,8 +5,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { addConnection } from "../redux/connectionSlice";
 
+
 const Connections = () => {
   const dispatch = useDispatch();
+
   const userConnections = useSelector((store) => store?.connections);
 
   const fetchConnections = async () => {
@@ -19,7 +21,7 @@ const Connections = () => {
 
       dispatch(addConnection(res?.data?.data));
     } catch (error) {
-      console.log(error);
+        console.error("Error occurred while fetching connections:", error);
     }
   };
 

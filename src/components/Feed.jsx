@@ -5,8 +5,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { addFeed } from "../redux/feedSlice";
 
+
 const Feed = () => {
   const dispatch = useDispatch();
+
   const feed = useSelector((store) => store?.feed);
   const fetchFeed = async () => {
     try {
@@ -16,7 +18,8 @@ const Feed = () => {
 
       dispatch(addFeed(res?.data?.feed));
     } catch (error) {
-      console.log(error.message);
+      console.error("Error occurred while fetching feed:", error);
+    
     }
   };
 

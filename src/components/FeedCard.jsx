@@ -3,20 +3,28 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeUserFromFeed } from "../redux/feedSlice";
 
+
 /* eslint-disable react/prop-types */
 const FeedCard = ({ user }) => {
   const dispatch = useDispatch();
+
   if (!user) return;
   const { _id, firstName, lastName, age, gender, photoUrl, about } = user;
 
- 
-
-  const handleConnectionRequest = async (status) => {
+ try{
+  var handleConnectionRequest = async (status) => {
     await axios.post(`${BASE_URL}/sendConnectionRequest/${status}/${_id}`, {}, {
       withCredentials : true
     });
     dispatch(removeUserFromFeed(_id));
   };
+ }
+ catch (error) {
+  console.error("Error occurred while sending connection requests:", error);
+
+}
+
+
 
   return (
     <div className="card bg-base-300 w-96 shadow-xl m-2">

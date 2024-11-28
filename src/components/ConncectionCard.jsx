@@ -4,10 +4,10 @@ import { BASE_URL } from "../utils/constants";
 import { removeRequest } from "../redux/requestSlice";
 import { useDispatch } from "react-redux";
 
+
 /* eslint-disable react/prop-types */
 const ConncectionCard = ({ data }) => {
-
- // console.log(data)
+  // console.log(data)
   if (!data) return;
 
   const { firstName, lastName, age, gender, photoUrl, skills } = data;
@@ -25,49 +25,53 @@ const ConncectionCard = ({ data }) => {
 };
 
 export const CardForRequest = (ConnectionCard) => {
- 
- 
   const dispatch = useDispatch();
-  
-  return (props) =>{ 
 
+  return (props) => {
     //console.log(props.data._id)
 
-    
+    const { fromUserId, _id } = props.data;
 
-    const {fromUserId, _id} = props.data ;
+    try {
+      var reviewRequests = async (status, id) => {
+        await axios.post(
+          `${BASE_URL}/request/review/${status}/${id}`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
 
-   
+        dispatch(removeRequest(_id));
+      };
+    } catch (error) {
+      console.error(
+        "Error occurred while reviewing connection requests:",
+        error
+      );
     
-    const reviewRequests = async (status, id) => {  
-      const res = await axios.post(`${BASE_URL}/request/review/${status}/${id}`,{},{
-        withCredentials : true
-      });
-
-      dispatch(removeRequest(_id));
-  
-    
-    };
+    }
 
     return (
-    <div className="flex justify-center ">
-      <ConnectionCard data={fromUserId} />
-      <div className=" m-1  flex flex-col items-stretch text-xl">
-        <button
-          className="btn btn-primary m-2 p-3 font-bold"
-          onClick={() => reviewRequests("accepted", _id)}
-        >
-          Accept
-        </button>
-        <button
-          className="btn btn-accent m-2 p-3 font-bold"
-          onClick={() => reviewRequests("rejected", _id)}
-        >
-          Reject
-        </button>
+      <div className="flex justify-center ">
+        <ConnectionCard data={fromUserId} />
+        <div className=" m-1  flex flex-col items-stretch text-xl">
+          <button
+            className="btn btn-primary m-2 p-3 font-bold"
+            onClick={() => reviewRequests("accepted", _id)}
+          >
+            Accept
+          </button>
+          <button
+            className="btn btn-accent m-2 p-3 font-bold"
+            onClick={() => reviewRequests("rejected", _id)}
+          >
+            Reject
+          </button>
+        </div>
       </div>
-    </div>
-  );}
+    );
+  };
 };
 
 export default ConncectionCard;

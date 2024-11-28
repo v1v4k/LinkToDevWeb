@@ -10,9 +10,14 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await axios.post(`${BASE_URL}/logout`);
-    dispatch(removeUser());
-    return navigate("/login");
+    try {
+      await axios.post(`${BASE_URL}/logout`);
+      dispatch(removeUser());
+      return navigate("/login");
+    } catch (error) {
+      console.error("Error occurred while logout:", error);
+      
+    }
   };
 
   return (
