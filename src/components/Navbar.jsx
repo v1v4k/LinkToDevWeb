@@ -16,7 +16,6 @@ const Navbar = () => {
       return navigate("/login");
     } catch (error) {
       console.error("Error occurred while logout:", error);
-      
     }
   };
 
@@ -59,6 +58,7 @@ const Navbar = () => {
                   Requests
                 </Link>
               </li>
+
               <li>
                 <a>Settings</a>
               </li>

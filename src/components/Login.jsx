@@ -6,13 +6,13 @@ import { addUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("cena@gmail.com");
-  const [password, setPassword] = useState("Cena@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
 
-  const [isShowSignIn, setIsShowSignIn] = useState(false);
+  const [isShowSignIn, setIsShowSignIn] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -72,20 +72,24 @@ const Login = () => {
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="flex flex-col justify-center">
-           { !isShowSignIn && <><input
-                type="text"
-                value={firstName}
-                placeholder="First Name"
-                className="input input-bordered w-full max-w-xs m-1"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-              <input
-                type="text"
-                value={lastName}
-                placeholder="Last Name"
-                className="input input-bordered w-full max-w-xs m-1"
-                onChange={(e) => setLastName(e.target.value)}
-              /></>}
+              {!isShowSignIn && (
+                <>
+                  <input
+                    type="text"
+                    value={firstName}
+                    placeholder="First Name"
+                    className="input input-bordered w-full max-w-xs m-1"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={lastName}
+                    placeholder="Last Name"
+                    className="input input-bordered w-full max-w-xs m-1"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </>
+              )}
               <input
                 type="text"
                 value={emailId}
@@ -104,12 +108,22 @@ const Login = () => {
           </label>
         </div>
         <p className="text-red-500">{error}</p>
-        <button className="btn w-48" onClick={isShowSignIn ? handleLogin : handleSignUp}>
-        {isShowSignIn ? "Sign In" : "Sign Up"}
+        <button
+          className="btn w-48"
+          onClick={isShowSignIn ? handleLogin : handleSignUp}
+        >
+          {isShowSignIn ? "Sign In" : "Sign Up"}
         </button>
-        <p className="cursor-pointer" onClick={()=>{
-          setIsShowSignIn(!isShowSignIn)
-        }}>{isShowSignIn ? "Already Subscribed Sign In here" : "New User Sign up here"}</p>
+        <p
+          className="cursor-pointer"
+          onClick={() => {
+            setIsShowSignIn(!isShowSignIn);
+          }}
+        >
+          {isShowSignIn
+            ? `New User ? Sign up here`
+            : `Already Subscribed ? Sign In here`}
+        </p>
       </div>
     </div>
   );
