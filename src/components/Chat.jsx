@@ -7,7 +7,7 @@ const Chat = () => {
   const { toUserId: targetUserId } = useParams();
   const { _id: userId, firstName } = useSelector((Store) => Store?.user);
 
-  const [messages, setMessages] = useState("Hello... This is Vivek");
+  const [messages, setMessages] = useState([]);
 
   const [newMessage, setNewMessage] = useState("");
 
@@ -16,6 +16,11 @@ const Chat = () => {
     const socket = createSocketConnection();
 
     socket.emit("joinChat", { userId, firstName, targetUserId });
+
+    socket.on("messageReceived", ({ firstName, text }) => {
+      console.log(`${firstName} , ${text}`);
+      setMessages((messages) => [...messages, { firstName, text }]);
+    });
 
     return () => {
       socket.disconnect();
@@ -30,61 +35,54 @@ const Chat = () => {
       targetUserId,
       text: newMessage,
     });
+    setNewMessage("");
   };
+  
 
-  return (
-    <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-2 border-teal-200">
-      <h1 className="border-b-2 border-teal-200 w-full flex justify-center text-3xl text-white">
-        chat
-      </h1>
-      <div className="w-full flex-grow m-1 p-1">
-        <div className="chat chat-start">
-          <div className="chat-image avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS chat bubble component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
-          </div>
-          <div className="chat-header">
-            {firstName}
-            <time className="text-xs opacity-50">12:45</time>
-          </div>
-          <div className="chat-bubble">{messages}</div>
-          <div className="chat-footer opacity-50">Delivered</div>
+      return (
+        <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-2 border-teal-200">
+          <h1 className="border-b-2 border-teal-200 w-full flex justify-center text-3xl text-white">
+            chat
+          </h1>
+          <div className="w-full flex-grow m-1 p-1">
+          {
+            messages.map((msg, index)=>{
+                return(
+                <div key={index} className="chat chat-start">
+                  <div className="chat-image avatar">
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS chat bubble component"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      />
+                    </div>
+                  </div>
+                  <div className="chat-header">
+                    {msg.firstName}
+                    <time className="text-xs opacity-50">12:45</time>
+                  </div>
+                  <div className="chat-bubble">{msg.text}</div>
+                  <div className="chat-footer opacity-50">Delivered</div>
+                </div>)})
+            
+          }
         </div>
-        <div className="chat chat-end">
-          <div className="chat-image avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS chat bubble component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
+          <div className="w-full flex p-2 m-2">
+            <input
+              value={newMessage}
+              type="text"
+              placeholder="message here"
+              className="m-1 p-2 flex-grow rounded-md"
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <button className="btn btn-secondary" onClick={handleSendMessage}>
+              send
+            </button>
           </div>
-          <div className="chat-header">
-            vikram
-            <time className="text-xs opacity-50">12:46</time>
-          </div>
-          <div className="chat-bubble">How are you boss</div>
-          <div className="chat-footer opacity-50">Seen at 12:46</div>
         </div>
-      </div>
-      <div className="w-full flex p-2 m-2">
-        <input
-          value={newMessage}
-          type="text"
-          placeholder="message here"
-          className="m-1 p-2 flex-grow rounded-md"
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button className="btn btn-secondary" onClick={handleSendMessage}>
-          send
-        </button>
-      </div>
-    </div>
-  );
+      );
+ 
+  
 };
 
 export default Chat;
