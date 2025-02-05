@@ -4,22 +4,33 @@ import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 
 const Chat = () => {
-  const {  _id: targetUserId } = useParams();
-  const {  _id : userId, firstName } = useSelector((Store) => Store?.user);
-
-
+  const { toUserId: targetUserId } = useParams();
+  const { _id: userId, firstName } = useSelector((Store) => Store?.user);
 
   const [messages, setMessages] = useState("Hello... This is Vivek");
 
+  const [newMessage, setNewMessage] = useState("");
+
   useEffect(() => {
+    if (!userId) return;
     const socket = createSocketConnection();
 
-    socket.emit("joinChat", { userId, targetUserId });
+    socket.emit("joinChat", { userId, firstName, targetUserId });
 
     return () => {
       socket.disconnect();
     };
-  });
+  }, [userId, targetUserId]);
+
+  const handleSendMessage = () => {
+    const socket = createSocketConnection();
+    socket.emit("sendMessage", {
+      firstName,
+      userId,
+      targetUserId,
+      text: newMessage,
+    });
+  };
 
   return (
     <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-2 border-teal-200">
@@ -62,11 +73,15 @@ const Chat = () => {
       </div>
       <div className="w-full flex p-2 m-2">
         <input
+          value={newMessage}
           type="text"
           placeholder="message here"
           className="m-1 p-2 flex-grow rounded-md"
+          onChange={(e) => setNewMessage(e.target.value)}
         />
-        <button className="btn btn-secondary">send</button>
+        <button className="btn btn-secondary" onClick={handleSendMessage}>
+          send
+        </button>
       </div>
     </div>
   );
