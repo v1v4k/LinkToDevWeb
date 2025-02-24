@@ -8,6 +8,8 @@ import appStore from "./redux/appStore";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Chat from "./components/Chat";
+import Settings from "./components/Settings";
+import MfaAuth from "./components/MfaAuth";
 
 const App = () => {
   return (
@@ -16,12 +18,14 @@ const App = () => {
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Body />}>
-              <Route index element={<Feed />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Feed />} />
+              <Route index path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
+              <Route path="/settings" element={<Settings/>} />
               <Route path="/chat/:toUserId" element={<Chat />} />
+              <Route path="/mfa" element={<MfaAuth />}/>
             </Route>
           </Routes>
         </BrowserRouter>

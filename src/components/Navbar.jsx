@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { removeUser } from "../redux/userSlice";
+import { clearFeed } from "../redux/feedSlice";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -11,8 +12,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/logout`);
+      await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true});
       dispatch(removeUser());
+      dispatch(clearFeed());
       return navigate("/login");
     } catch (error) {
       console.error("Error occurred while logout:", error);
@@ -20,9 +22,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-300">
+    <div className="navbar bg-base">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to={user ? "/" : "/login"} className="btn btn-ghost text-xl">
           LinkToDev
         </Link>
       </div>
@@ -60,10 +62,10 @@ const Navbar = () => {
               </li>
 
               <li>
-                <a>Settings</a>
+                <Link to="/settings" className="justify-between">Settings</Link>
               </li>
               <li>
-                <Link to="/login" onClick={handleLogout}>
+                <Link to="/login" className="justify-between" onClick={handleLogout}>
                   Logout
                 </Link>
               </li>

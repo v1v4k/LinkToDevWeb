@@ -16,11 +16,15 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  console.log(user);
 
   useEffect(() => {
     // Redirect if already logged in
     if (user) {
-      navigate("/"); // Redirect to homepage if user is logged in
+      if (user.isMfaEnable) {
+        return navigate("/mfa");
+      }
+      return navigate("/"); // Redirect to homepage if user is logged in
     }
   }, [user, navigate]);
 
@@ -66,9 +70,9 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-base-300 text-white w-96 mx-[40%] my-[5%]">
+    <div className="card bg-primary text-neutal w-1/4 mx-auto my-[3%]">
       <div className="card-body flex  flex-col items-center ">
-        <h2 className="card-title">{isShowSignIn ? "Sign In" : "Sign Up"}</h2>
+        <h2 className="card-title text-2xl">{isShowSignIn ? "Sign In" : "Sign Up"}</h2>
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="flex flex-col justify-center">
@@ -104,16 +108,15 @@ const Login = () => {
                 className="input input-bordered w-full max-w-xs m-1"
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                className="btn bg-base-100 w-full max-w-xs m-1 text-lg"
+                onClick={isShowSignIn ? handleLogin : handleSignUp}
+              >{isShowSignIn ? "Sign In" : "Sign Up"}
+              </button>
             </div>
           </label>
         </div>
         <p className="text-red-500">{error}</p>
-        <button
-          className="btn w-48"
-          onClick={isShowSignIn ? handleLogin : handleSignUp}
-        >
-          {isShowSignIn ? "Sign In" : "Sign Up"}
-        </button>
         <p
           className="cursor-pointer"
           onClick={() => {
