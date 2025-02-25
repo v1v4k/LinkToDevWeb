@@ -23,9 +23,9 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
-              <Route path="/settings" element={<Settings/>} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/chat/:toUserId" element={<Chat />} />
-              <Route path="/mfa" element={<MfaAuth />}/>
+              <Route path="/mfa" element={<MfaAuth />} />
             </Route>
           </Routes>
         </BrowserRouter>

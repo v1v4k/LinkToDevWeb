@@ -59,11 +59,11 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-2 border-teal-200">
-      <h1 className="border-b-2 border-teal-200 w-full flex justify-center text-3xl text-white">
+    <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-4 bg-primary rounded-lg">
+      <h1 className="border-b-2 w-full flex justify-center text-2xl font-bold">
         chat
       </h1>
-      <div className="w-full flex-grow m-1 p-1 overflow-scroll">
+      <div className="w-full flex-grow m-1 p-1 overflow-scroll bg-white">
         {messages.map((msg, index) => {
           return (
             <div

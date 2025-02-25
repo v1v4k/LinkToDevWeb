@@ -43,8 +43,8 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="flex justify-center">
-        <div>
+      <div className="flex justify-center items-center">
+        <div className="bg-primary w-80 h-auto m-4 rounded-xl">
           <FeedCard
             user={{ firstName, lastName, age, gender, about, photoUrl }}
           />
