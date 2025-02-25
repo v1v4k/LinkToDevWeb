@@ -27,7 +27,7 @@ const MfaAuth = () => {
           withCredentials: true,
         }
       );
-      console.log(res);
+      //console.log(res);
       if (res.status === 200) {
         return navigate("/");
       } else {
