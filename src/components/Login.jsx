@@ -16,7 +16,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  console.log(user);
+  //console.log(user);
 
   useEffect(() => {
     // Redirect if already logged in
@@ -41,9 +41,11 @@ const Login = () => {
         }
       );
 
-      //console.log(data);
       if (!response.data) return;
       dispatch(addUser(response.data));
+      if (response.data.isMfaEnable && !response.data.mfaVerified){
+        return navigate("/mfa"); // Redirect to MFA if enabled but not verified
+      }
       return navigate("/");
     } catch (error) {
       //console.error("Error occurred while login:", error);

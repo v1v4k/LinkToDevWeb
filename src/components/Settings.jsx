@@ -1,21 +1,30 @@
 import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../utils/constants";
+import MfaSetup from "./MfaSetup";
 
 const Settings = () => {
-  const [isEnable, setIsEnable] = useState(true);
+  const [isEnable, setIsEnable] = useState(false);
   const handleMfa = async (value) => {
-    const data = await axios.post(`${BASE_URL}/mfa/enable/${value}`,{}, {
-        withCredentials : true
-    });
-    
-    setIsEnable(prevState => !prevState);
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/mfa/enable/${value}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setIsEnable((prevState) => !prevState);
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   return (
     <div className="w-1/2 mx-auto text-center">
       <h1 className="text-2xl font-bold">Settings</h1>
       <div className="flex justify-between mt-4">
-        <p className="font-bold text-2xl">Multifactor Authentication</p>
+        <p className="font-bold text-xl">Multifactor Authentication</p>
         <button
           className="btn btn-secondary"
           onClick={isEnable ? () => handleMfa(false) : () => handleMfa(true)}
@@ -23,6 +32,7 @@ const Settings = () => {
           {isEnable ? "Disable" : "Enable"}
         </button>
       </div>
+      {isEnable && <MfaSetup />}
     </div>
   );
 };
