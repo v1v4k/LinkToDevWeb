@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base">
       <div className="flex-1">
-        <Link to={user ? "/" : "/login"} className="btn btn-ghost text-xl">
+        <Link to={ "/" } className="btn btn-ghost text-xl">
           LinkToDev
         </Link>
       </div>

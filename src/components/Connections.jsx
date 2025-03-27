@@ -28,17 +28,22 @@ const Connections = () => {
     fetchConnections();
   }, []);
 
-
   return (
-    <div>
+    <div className="">
       <h2 className="text-2xl font-bold text-center m-2 p-2">Connections</h2>
-     { (!userConnections || userConnections.length === 0) ?
-      <h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1> :
-      userConnections.map((connection) => (
-        <div className="m-1 p-1 flex justify-center" key={connection._id}>
-          <ConncectionCard data={connection} />
+      {!userConnections || userConnections.length === 0 ? (
+        <h1 className="text-center font-bold text-2xl my-6">
+          No Requests Found
+        </h1>
+      ) : (
+        <div className="mx-auto w-1/2 max-h-[720px] overflow-y-scroll">
+          {userConnections.map((connection) => (
+            <div className="m-1 p-1 " key={connection._id}>
+              <ConncectionCard data={connection} />
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };

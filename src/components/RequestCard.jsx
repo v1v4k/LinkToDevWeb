@@ -33,7 +33,7 @@ const RequestCard = ({ data }) => {
 
   return (
     <div className="flex justify-center m-2">
-      <div className="flex bg-base-300 text-neutral items-center rounded-xl w-1/2 p-2">
+      <div className="flex bg-base-300 text-neutral items-center rounded-xl w-full p-2">
         <img
           className=" w-24 h-24 rounded-full m-2"
           src={photoUrl}

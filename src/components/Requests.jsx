@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../redux/requestSlice";
 import RequestCard from "./RequestCard";
 
-
 const Requests = () => {
   const dispatch = useDispatch();
-
 
   const userRequests = useSelector((store) => store.requests);
 
@@ -31,22 +29,26 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
- /*  const RequestCard = CardForRequest(ConncectionCard);*/
+  /*  const RequestCard = CardForRequest(ConncectionCard);*/
 
-/*   if (!userRequests || userRequests.length === 0)
+  /*   if (!userRequests || userRequests.length === 0)
     return (
       <h1 className="text-center font-bold text-2xl my-6">No Requests Found</h1>
     ); */
- 
-   //console.log(userRequests[0]?.fromUserId )
+
+  //console.log(userRequests[0]?.fromUserId )
   return (
     <>
       <h2 className="text-2xl font-bold text-center m-2 p-2">Requests</h2>
-      {
-        (!userRequests || userRequests.length === 0) ? <h1 className="text-center  text-2xl my-4">No Requests Found</h1> :
-      
-        userRequests.map((req)=><RequestCard key={req._id} data={[req._id, req.fromUserId]}/>)}
-      
+      {!userRequests || userRequests.length === 0 ? (
+        <h1 className="text-center  text-2xl my-4">No Requests Found</h1>
+      ) : (
+        <div className="mx-auto w-1/3 max-h-[720px] overflow-y-scroll">
+          {userRequests.map((req) => (
+            <RequestCard key={req._id} data={[req._id, req.fromUserId]} />
+          ))}
+        </div>
+      )}
     </>
   );
 };

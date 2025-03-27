@@ -2,10 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../redux/userSlice";
 
 const MfaVerify = () => {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const verifyMFA = async () => {
     try {
       const res = await axios.post(
@@ -17,9 +21,10 @@ const MfaVerify = () => {
       );
       //console.log(res);
       if (res.status === 200) {
-        return navigate("/");
-      } else {
-        return navigate("/mfa");
+        dispatch(addUser({ ...user, mfaVerified: true }));
+
+        // ✅ Redirect to feed
+        navigate("/");
       }
     } catch (err) {
       console.log(`${err}`);

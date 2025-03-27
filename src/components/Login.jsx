@@ -71,6 +71,7 @@ const Login = () => {
     }
   };
 
+  console.log("render")
   return (
     <div className="card bg-primary text-neutal w-1/4 mx-auto my-[3%]">
       <div className="card-body flex  flex-col items-center ">

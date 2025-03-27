@@ -36,7 +36,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className="max-h-screen">
       <Navbar />
       <Outlet />
       <Footer />

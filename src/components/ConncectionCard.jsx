@@ -6,7 +6,7 @@ const ConncectionCard = ({ data }) => {
   const { firstName, lastName, age, gender, photoUrl, skills, _id } = data;
 
   return (
-    <div className="flex bg-base-300 text-neutral items-center rounded-xl w-1/2 p-2">
+    <div className="flex bg-base-300 text-neutral items-center rounded-xl w-full p-2">
       <img className=" w-24 h-24 rounded-full m-2" src={photoUrl} alt="photo" />
       <div className="mx-1 p-1 flex-grow">
         <h2 className="font-bold text-xl">{`${firstName} ${lastName}`}</h2>

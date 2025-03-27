@@ -22,7 +22,7 @@ const Feed = () => {
 
       dispatch(addFeed(res?.data?.feed));
     } catch (error) {
-      console.error("Error occurred while fetching feed:", error);
+      //console.error("Error occurred while fetching feed:", error);
     }
   };
 
@@ -72,7 +72,7 @@ catch (error) {
   if (currentIndex >= feed.length) return <div></div>;
 
   return (
-    <div className="flex justify-center mt-[5%] h-screen">
+    <div className="flex justify-center mt-[5%]">
       <motion.div
       key={feed[currentIndex]._id}
         className="bg-primary p-8 rounded-2xl shadow-xl w-72 h-96 text-xl"
