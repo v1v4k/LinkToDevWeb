@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 const ConncectionCard = ({ data }) => {
   if (!data) return;
 
@@ -19,5 +19,18 @@ const ConncectionCard = ({ data }) => {
     </div>
   );
 };
+
+ConncectionCard.propTypes ={
+  data: PropTypes.shape({
+    firstName : PropTypes.string.isRequired,
+     lastName : PropTypes.string.isRequired, 
+     age : PropTypes.number.isRequired, 
+     gender : PropTypes.string.isRequired, 
+     photoUrl : PropTypes.string.isRequired, 
+     skills : PropTypes.string.isRequired, 
+     _id : PropTypes.string.isRequired
+
+  }).isRequired
+}
 
 export default ConncectionCard;

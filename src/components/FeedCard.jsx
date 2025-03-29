@@ -1,6 +1,8 @@
+import PropTypes  from "prop-types";
+
 const FeedCard = ({ user }) => {
-  if (!user) return;
-  const { _id, firstName, lastName, age, gender, photoUrl, about } = user;
+  if (!user) return null;
+  const {  firstName, lastName, age, gender, photoUrl, about } = user;
 
   return (
     <div>
@@ -15,5 +17,16 @@ const FeedCard = ({ user }) => {
     </div>
   );
 };
+
+FeedCard.propTypes = {
+  user: PropTypes.shape({
+    firstName : PropTypes.string.isRequired, 
+    lastName : PropTypes.string.isRequired, 
+    age : PropTypes.number.isRequired, 
+    gender : PropTypes.string.isRequired, 
+    photoUrl : PropTypes.string.isRequired, 
+    about : PropTypes.string.isRequired
+  }).isRequired
+}
 
 export default FeedCard;

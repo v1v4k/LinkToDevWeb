@@ -1,4 +1,5 @@
 import axios from "axios";
+import PropTypes from "prop-types";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeRequest } from "../redux/requestSlice";
@@ -63,4 +64,16 @@ const RequestCard = ({ data }) => {
   );
 };
 
+RequestCard.propTypes = {
+  data : PropTypes.shape({
+    firstName : PropTypes.string.isRequired, 
+    lastName : PropTypes.string.isRequired, 
+    gender : PropTypes.string.isRequired, 
+    skills : PropTypes.string.isRequired, 
+    photoUrl : PropTypes.string.isRequired, 
+    age : PropTypes.number.isRequired
+
+  }).isRequired
+  
+}
 export default RequestCard;
