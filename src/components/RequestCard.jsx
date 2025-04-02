@@ -43,7 +43,7 @@ const RequestCard = ({ data }) => {
         <div className="mx-1 p-1 flex-grow">
           <h2 className="font-bold text-xl">{`${firstName} ${lastName}`}</h2>
           <p>{`${gender} ${age}`}</p>
-          <p>{`${skills}`}</p>
+          <p>{`${skills.slice(0,3)}`}</p>
         </div>
         <div className="flex flex-col">
           <button

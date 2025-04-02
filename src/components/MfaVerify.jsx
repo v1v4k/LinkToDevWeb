@@ -19,24 +19,21 @@ const MfaVerify = () => {
           withCredentials: true,
         }
       );
-      //console.log(res);
       if (res.status === 200) {
         dispatch(addUser({ ...user, mfaVerified: true }));
-
-        // ✅ Redirect to feed
         navigate("/");
       }
     } catch (err) {
       console.log(`${err}`);
     }
   };
-  
+
   return (
-    <div className="">
+    <div className="flex-col justify-center md:mt-[5%]">
       <h1 className="text-center text-2xl font-bold">
         Multifactor Authentication
       </h1>
-      <div className="bg-primary mx-auto my-4 p-4 w-1/4 rounded-xl">
+      <div className="bg-primary mx-auto my-4 p-4 w-[80%] md:w-1/4 rounded-xl">
         <div className="mt-4 flex justify-center">
           <input
             value={code}
@@ -44,9 +41,9 @@ const MfaVerify = () => {
             className="p-3 rounded-md"
             placeholder="enter qrcode"
           />
-          <submit className="btn  ml-3" onClick={verifyMFA}>
+          <button className="btn  ml-3" onClick={verifyMFA}>
             Submit
-          </submit>
+          </button>
         </div>
       </div>
     </div>

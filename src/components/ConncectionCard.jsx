@@ -11,10 +11,10 @@ const ConncectionCard = ({ data }) => {
       <div className="mx-1 p-1 flex-grow">
         <h2 className="font-bold text-xl">{`${firstName} ${lastName}`}</h2>
         <p>{`${gender} ${age}`}</p>
-        <p>{`${skills}`}</p>
+        <p>{`${skills?.slice(0,2)}`}</p>
       </div>
       <Link to={`/chat/${_id}`}>
-        <button className="btn btn-primary">chat</button>
+        <button className="btn btn-primary ">chat</button>
       </Link>
     </div>
   );

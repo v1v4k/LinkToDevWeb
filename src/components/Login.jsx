@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +43,7 @@ const Login = () => {
 
       if (!response.data) return;
       dispatch(addUser(response.data));
-      if (response.data.isMfaEnable && !response.data.mfaVerified){
+      if (response.data.isMfaEnable && !response.data.mfaVerified) {
         return navigate("/mfa"); // Redirect to MFA if enabled but not verified
       }
       return navigate("/");
@@ -73,11 +71,12 @@ const Login = () => {
     }
   };
 
-  console.log("render")
   return (
-    <div className="card bg-primary text-neutal w-1/4 mx-auto my-[3%]">
+    <div className="card bg-primary text-neutal w-[90%] mx-auto mt-[25%] md:w-1/4 md:mx-auto md:my-[3%]">
       <div className="card-body flex  flex-col items-center ">
-        <h2 className="card-title text-2xl">{isShowSignIn ? "Sign In" : "Sign Up"}</h2>
+        <h2 className="card-title text-2xl">
+          {isShowSignIn ? "Sign In" : "Sign Up"}
+        </h2>
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="flex flex-col justify-center">
@@ -116,7 +115,8 @@ const Login = () => {
               <button
                 className="btn bg-base-100 w-full max-w-xs m-1 text-lg"
                 onClick={isShowSignIn ? handleLogin : handleSignUp}
-              >{isShowSignIn ? "Sign In" : "Sign Up"}
+              >
+                {isShowSignIn ? "Sign In" : "Sign Up"}
               </button>
             </div>
           </label>
@@ -136,6 +136,5 @@ const Login = () => {
     </div>
   );
 };
-
 
 export default Login;

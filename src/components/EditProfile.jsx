@@ -42,14 +42,14 @@ const EditProfile = ({ user }) => {
   }, []);
 
   return (
-    <>
-      <div className="flex justify-center items-center">
+    <div className="pb-12">
+      <div className="flex flex-col items-center justify-center md:flex-row">
         <div className="bg-primary w-80 h-auto m-4 rounded-xl">
           <FeedCard
             user={{ firstName, lastName, age, gender, about, photoUrl }}
           />
         </div>
-        <div className="card bg-base-300 w-96 shadow-xl m-2">
+        <div className="card bg-base-300 w-96  shadow-xl m-2">
           <form className="card-body" onSubmit={(e) => e.preventDefault()}>
             <div className="form-control">
               <label className="label">
@@ -136,7 +136,7 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -36,7 +36,7 @@ const Connections = () => {
           No Requests Found
         </h1>
       ) : (
-        <div className="mx-auto w-1/2 max-h-[720px] overflow-y-scroll">
+        <div className="mx-auto md:w-1/2 max-h-[720px] overflow-y-scroll">
           {userConnections.map((connection) => (
             <div className="m-1 p-1 " key={connection._id}>
               <ConncectionCard data={connection} />

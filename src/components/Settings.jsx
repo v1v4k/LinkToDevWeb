@@ -22,9 +22,9 @@ const Settings = () => {
 
   return (
     <div className="w-1/2 mx-auto text-center">
-      <h1 className="text-2xl font-bold">Settings</h1>
-      <div className="flex justify-between mt-4">
-        <p className="font-bold text-xl">Multifactor Authentication</p>
+      <h1 className="text-2xl font-bold mt-[5%] ">Settings</h1>
+      <div className="flex md:justify-evenly md:items-center mt-4">
+        <p className="font-bold text-md md:text-xl">Multifactor Authentication</p>
         <button
           className="btn btn-secondary"
           onClick={isEnable ? () => handleMfa(false) : () => handleMfa(true)}

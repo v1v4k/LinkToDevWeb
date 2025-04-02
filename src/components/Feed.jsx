@@ -12,7 +12,9 @@ const Feed = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, feed } = useSelector((store) => store);
+
+  const user = useSelector((state) => state.user);
+  const feed = useSelector((state) => state.feed);
 
   const fetchFeed = async () => {
     try {
@@ -27,14 +29,16 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && !feed) {
       fetchFeed();
     }
-  }, []);
+  }, [user, feed]);
 
-  if (!feed) return navigate("/login");
-
-  
+  useEffect(() => {
+    if (!user) {
+      return navigate("/login" , { replace: true });
+    }
+  }, [user]);
 
   const handleSwipe = (direction) => {
     if (direction === "right") {
@@ -54,27 +58,25 @@ const Feed = () => {
 
   const handleConnectionRequest = async (status) => {
     try {
-    await axios.post(
-      `${BASE_URL}/sendConnectionRequest/${status}/${feed[currentIndex]._id}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    dispatch(removeUserFromFeed(feed[currentIndex]._id));
-  }
-catch (error) {
-  console.error("Error occurred while sending connection requests:", error);
-}
-}
+      await axios.post(
+        `${BASE_URL}/sendConnectionRequest/${status}/${feed[currentIndex]._id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeUserFromFeed(feed[currentIndex]._id));
+    } catch (error) {
+      console.error("Error occurred while sending connection requests:", error);
+    }
+  };
 
-
-  if (currentIndex >= feed.length) return <div></div>;
+  if (!feed?.length || currentIndex >= feed.length) return <div></div>;
 
   return (
-    <div className="flex justify-center mt-[5%]">
+    <div className="flex justify-center mt-[20%] md:mt-[2%] ">
       <motion.div
-      key={feed[currentIndex]._id}
+        key={feed[currentIndex]._id}
         className="bg-primary p-8 rounded-2xl shadow-xl w-72 h-96 text-xl"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}

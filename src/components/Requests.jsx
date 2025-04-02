@@ -43,7 +43,7 @@ const Requests = () => {
       {!userRequests || userRequests.length === 0 ? (
         <h1 className="text-center  text-2xl my-4">No Requests Found</h1>
       ) : (
-        <div className="mx-auto w-1/3 max-h-[720px] overflow-y-scroll">
+        <div className="mx-auto w-[90%] md:w-1/2 max-h-[720px] overflow-y-scroll">
           {userRequests.map((req) => (
             <RequestCard key={req._id} data={[req._id, req.fromUserId]} />
           ))}

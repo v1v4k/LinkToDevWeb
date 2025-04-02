@@ -17,7 +17,7 @@ const App = () => {
   return (
     <>
       <Provider store={appStore}>
-        <BrowserRouter basename="/">
+        <BrowserRouter basename="/" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}> 
           <Routes>
             <Route path="/" element={<Body />}>
               <Route path="/login" element={<Login />} />
