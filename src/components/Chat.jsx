@@ -59,7 +59,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="w-1/2 h-[70vh] mx-auto flex flex-col items-center my-2 border-4 bg-primary rounded-lg">
+    <div className="w-[90%] md:w-1/2 h-[80vh] md:h-[70vh] mx-auto flex flex-col items-center my-2 border-4 bg-primary rounded-lg">
       <h1 className="border-b-2 w-full flex justify-center text-2xl font-bold">
         chat
       </h1>

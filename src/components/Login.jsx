@@ -49,7 +49,7 @@ const Login = () => {
       return navigate("/");
     } catch (error) {
       //console.error("Error occurred while login:", error);
-      setError(error?.response?.data || "Something went wrong");
+      setError(error?.response?.status || "Something went wrong");
     }
   };
 
