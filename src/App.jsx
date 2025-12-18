@@ -13,27 +13,31 @@ import MfaVerify from "./components/MfaVerify";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MfaProtectedRoute from "./components/MfaProtectedRoute";
 
+
 const App = () => {
+
   return (
     <>
       <Provider store={appStore}>
-        <BrowserRouter basename="/" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}> 
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/mfa" element={<MfaVerify />} />
-              <Route element={<ProtectedRoute />}>
-                <Route element={<MfaProtectedRoute />}>
-                  <Route path="/" element={<Feed />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/connections" element={<Connections />} />
-                  <Route path="/requests" element={<Requests />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/chat/:toUserId" element={<Chat />} />
+        <BrowserRouter basename="/" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <Routes>
+              <Route path="/" element={<Body />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/mfa" element={<MfaVerify />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route element={<MfaProtectedRoute />}>
+                    <Route path="/" element={<Feed />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/connections" element={<Connections />} />
+                    <Route path="/requests" element={<Requests />} />
+
+
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/chat/:toUserId" element={<Chat />} />
+                  </Route>
                 </Route>
               </Route>
-            </Route>
-          </Routes>
+            </Routes>
         </BrowserRouter>
       </Provider>
     </>

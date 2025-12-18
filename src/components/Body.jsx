@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { BASE_URL } from "../utils/constants";
@@ -11,9 +11,13 @@ const Body = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const fetchUser = async () => {
+  const location = useLocation();
+ 
+
+  useEffect(() => {
+     const fetchUser = async () => {
     try {
-      if(user) return;
+      if (user) return;
       const response = await axios.get(`${BASE_URL}/profile`, {
         withCredentials: true,
       });
@@ -23,22 +27,21 @@ const Body = () => {
       dispatch(addUser(response.data));
       //navigate("/");
     } catch (error) {
-      if (error.status === 401) {
+      if (error.status === 401 && location.pathname !== "/login") {
         navigate("/login");
       }
       console.error("Error occurred while fetching feed:", error);
-     
     }
   };
-
-  useEffect(() => {
-      fetchUser();
-  }, []);
+    fetchUser();
+  }, [dispatch, navigate, user, location.pathname]);
 
   return (
-    <div className="max-h-screen">
+    <div className="flex flex-col h-[100dvh] w-screen">
       <Navbar />
-      <Outlet />
+      <div className="flex-grow relative flex justify-center items-center">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
