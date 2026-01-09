@@ -4,7 +4,7 @@ import { BASE_URL } from "../utils/constants";
 import MfaSetup from "./MfaSetup";
 
 const Settings = () => {
-  const [isEnable, setIsEnable] = useState(false);
+  const [isEnable, setIsEnable] = useState("");
   const handleMfa = async (value) => {
     try {
       const response = await axios.post(

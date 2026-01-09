@@ -16,7 +16,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  //console.log(user);
 
   useEffect(() => {
     // Redirect if already logged in
@@ -24,7 +23,7 @@ const Login = () => {
       if (user.isMfaEnable) {
         return navigate("/mfa");
       }
-      return navigate("/"); // Redirect to homepage if user is logged in
+      return navigate("/"); 
     }
   }, [user, navigate]);
 
@@ -32,24 +31,18 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${BASE_URL}/login`,
-        {
-          emailId,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
+        { emailId, password },
+        { withCredentials: true }
       );
 
       if (!response.data) return;
       dispatch(addUser(response.data));
       if (response.data.isMfaEnable && !response.data.mfaVerified) {
-        return navigate("/mfa"); // Redirect to MFA if enabled but not verified
+        return navigate("/mfa"); 
       }
       return navigate("/");
     } catch (error) {
-      //console.error("Error occurred while login:", error);
-      setError(error?.response?.status || "Something went wrong");
+      setError(error?.response?.status === 401 ? "Invalid Credentials" : "Something went wrong");
     }
   };
 
@@ -58,80 +51,87 @@ const Login = () => {
       const response = await axios.post(
         `${BASE_URL}/signup`,
         { firstName, lastName, emailId, password },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       if (!response.data) return;
       dispatch(addUser(response.data));
       return navigate("/profile");
     } catch (error) {
-      //console.error("Error occurred while login:", error);
       setError(error?.response?.data || "Something went wrong");
     }
   };
 
   return (
-    <div className="card bg-primary text-neutal w-[90%] mx-auto mt-[25%] md:w-1/4 md:mx-auto md:my-[3%]">
-      <div className="card-body flex  flex-col items-center ">
-        <h2 className="card-title text-2xl">
-          {isShowSignIn ? "Sign In" : "Sign Up"}
-        </h2>
-        <div>
-          <label className="form-control w-full max-w-xs">
-            <div className="flex flex-col justify-center">
-              {!isShowSignIn && (
-                <>
-                  <input
-                    type="text"
-                    value={firstName}
-                    placeholder="First Name"
-                    className="input input-bordered w-full max-w-xs m-1"
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    value={lastName}
-                    placeholder="Last Name"
-                    className="input input-bordered w-full max-w-xs m-1"
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </>
-              )}
-              <input
-                type="text"
-                value={emailId}
-                placeholder="Email Id"
-                className="input input-bordered w-full max-w-xs m-1"
-                onChange={(e) => setEmailId(e.target.value)}
-              />
-              <input
-                type="text"
-                value={password}
-                placeholder="Password"
-                className="input input-bordered w-full max-w-xs m-1"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                className="btn bg-base-100 w-full max-w-xs m-1 text-lg"
-                onClick={isShowSignIn ? handleLogin : handleSignUp}
-              >
-                {isShowSignIn ? "Sign In" : "Sign Up"}
-              </button>
-            </div>
-          </label>
+    // FIX 1: Wrapper div centers content in the available space (Outlet)
+    // h-full fills the height provided by Body.jsx
+    <div className="flex justify-center items-center w-full h-full bg-base-200">
+      
+      {/* FIX 2: Replaced margins with card styling
+          - w-full max-w-sm: Ensures good width on mobile but stops growing on desktop
+          - shadow-2xl: Adds depth
+      */}
+      <div className="card w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card-body">
+          <h2 className="card-title text-2xl justify-center mb-4">
+            {isShowSignIn ? "Sign In" : "Sign Up"}
+          </h2>
+          
+          <div className="flex flex-col gap-3">
+            {!isShowSignIn && (
+              <>
+                <input
+                  type="text"
+                  value={firstName}
+                  placeholder="First Name"
+                  className="input input-bordered w-full"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={lastName}
+                  placeholder="Last Name"
+                  className="input input-bordered w-full"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </>
+            )}
+            <input
+              type="text"
+              value={emailId}
+              placeholder="Email Id"
+              className="input input-bordered w-full"
+              onChange={(e) => setEmailId(e.target.value)}
+            />
+            <input
+              type="password" /* FIX: Use password type */
+              value={password}
+              placeholder="Password"
+              className="input input-bordered w-full"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            
+            <button
+              className="btn btn-primary w-full mt-2 text-lg"
+              onClick={isShowSignIn ? handleLogin : handleSignUp}
+            >
+              {isShowSignIn ? "Sign In" : "Sign Up"}
+            </button>
+          </div>
+
+          {error && <p className="text-error text-center mt-2 text-sm font-semibold">{error}</p>}
+          
+          <p
+            className="text-center mt-4 cursor-pointer hover:underline text-sm opacity-70"
+            onClick={() => {
+              setIsShowSignIn(!isShowSignIn);
+              setError(""); // Clear error when switching modes
+            }}
+          >
+            {isShowSignIn
+              ? "New User? Sign up here"
+              : "Already Subscribed? Sign In here"}
+          </p>
         </div>
-        <p className="text-red-500">{error}</p>
-        <p
-          className="cursor-pointer"
-          onClick={() => {
-            setIsShowSignIn(!isShowSignIn);
-          }}
-        >
-          {isShowSignIn
-            ? `New User ? Sign up here`
-            : `Already Subscribed ? Sign In here`}
-        </p>
       </div>
     </div>
   );

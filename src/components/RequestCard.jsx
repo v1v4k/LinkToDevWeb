@@ -4,12 +4,15 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeRequest } from "../redux/requestSlice";
 
-const RequestCard = ({ data }) => {
-  const _id = data[0];
-
-  const { firstName, lastName, gender, skills, photoUrl, age } = data[1];
-
+const RequestCard = ({ request }) => {
+  const { _id, fromUserId } = request;
   const dispatch = useDispatch();
+
+  if (!fromUserId) {
+    return null; 
+  }
+
+  const { firstName, lastName, gender, skills, photoUrl, age } = fromUserId;
 
   const reviewRequests = async (status) => {
     try {
@@ -20,41 +23,43 @@ const RequestCard = ({ data }) => {
           withCredentials: true,
         }
       );
-      if(res.status === 200){
+      if (res.status === 200) {
         dispatch(removeRequest(_id));
       }
-      console.log(res);
     } catch (error) {
-      console.error(
-        "Error occurred while reviewing connection requests:",
-        error
-      );
+      console.error("Error reviewing connection request:", error);
     }
   };
 
   return (
     <div className="flex justify-center m-2">
-      <div className="flex bg-base-300 text-neutral items-center rounded-xl w-full p-2">
+      <div className="flex bg-base-300 text-neutral items-center rounded-xl w-full p-2 shadow-md">
         <img
-          className=" w-24 h-24 rounded-full m-2"
+          className="w-24 h-24 rounded-full m-2 object-cover"
           src={photoUrl}
-          alt="photo"
+          alt={`${firstName}'s profile`}
         />
-        <div className="mx-1 p-1 flex-grow">
-          <h2 className="font-bold text-xl">{`${firstName} ${lastName}`}</h2>
-          <p>{`${gender} ${age}`}</p>
-          <p>{`${skills.slice(0,3)}`}</p>
+        <div className="mx-1 p-1 flex-grow text-left">
+          <h2 className="font-bold text-xl capitalize">
+            {firstName} {lastName}
+          </h2>
+          <p className="text-sm">
+            {gender} {age && `, ${age}`}
+          </p>
+          <p className="text-sm text-gray-500">
+            {skills?.slice(0, 3).join(", ")}
+          </p>
         </div>
         <div className="flex flex-col">
           <button
-            className="btn btn-primary font-bold m-2"
-            onClick={() => reviewRequests(`accept`)}
+            className="btn btn-success btn-sm font-bold m-1"
+            onClick={() => reviewRequests("accept")}
           >
             Accept
           </button>
           <button
-            className="btn btn-primary font-bold m-2"
-            onClick={() => reviewRequests(`reject`)}
+            className="btn btn-error btn-sm font-bold m-1"
+            onClick={() => reviewRequests("reject")}
           >
             Reject
           </button>
@@ -65,15 +70,17 @@ const RequestCard = ({ data }) => {
 };
 
 RequestCard.propTypes = {
-  data : PropTypes.shape({
-    firstName : PropTypes.string.isRequired, 
-    lastName : PropTypes.string.isRequired, 
-    gender : PropTypes.string.isRequired, 
-    skills : PropTypes.string.isRequired, 
-    photoUrl : PropTypes.string.isRequired, 
-    age : PropTypes.number.isRequired
+  request: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    fromUserId: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      gender: PropTypes.string,
+      skills: PropTypes.arrayOf(PropTypes.string),
+      photoUrl: PropTypes.string,
+      age: PropTypes.number,
+    })
+  }).isRequired,
+};
 
-  }).isRequired
-  
-}
 export default RequestCard;

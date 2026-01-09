@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-md px-4">
+    <div className="navbar bg-base-100 shadow-md px-4 relative z-50">
       <div className="flex-1">
         <Link to={"/"} className=" text-xl font-bold">
           LinkToDev
@@ -47,7 +47,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-200 rounded-box  mt-4 w-52 p-2 shadow-lg"
+              className="menu menu-sm dropdown-content font-medium bg-base-100 rounded-box mt-4 w-52 p-2 shadow-lg z-[100] gap-1"
             >
               <li>
                 <Link to="/profile">Profile</Link>
@@ -65,7 +65,7 @@ const Navbar = () => {
                 <Link to="/settings">Settings</Link>
               </li>
               <li>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleLogout} className="text-red-500">Logout</button>
               </li>
             </ul>
           </div>

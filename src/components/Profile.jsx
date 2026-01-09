@@ -8,7 +8,7 @@ const Profile = () => {
   const user = useSelector(store=>store.user)
   if(!user) return;
   return (
-    <div className="">< EditProfile user = {user}/></div>
+    <div className=" w-full h-full">< EditProfile user = {user}/></div>
   )
 }
 

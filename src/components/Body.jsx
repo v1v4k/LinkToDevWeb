@@ -37,9 +37,9 @@ const Body = () => {
   }, [dispatch, navigate, user, location.pathname]);
 
   return (
-    <div className="flex flex-col h-[100dvh] w-screen">
+    <div className="flex flex-col h-[100dvh] w-full overflow-hidden">
       <Navbar />
-      <div className="flex-grow relative flex justify-center items-center">
+      <div className="flex-1  overflow-hidden ">
         <Outlet />
       </div>
       <Footer />
