@@ -2,60 +2,79 @@ name: Frontend Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "dev"] 
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    
+    # If branch is 'main', use Production variables.
+    # If branch is 'dev', use Staging variables.
+    environment: 
+      name: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Staging' }}
 
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22.18.0"
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
-      - name: Build frontend
+      - name: Build Project
         run: npm run build
 
-      - name: Package dist
-        run: tar -czf dist.tgz -C dist .
+      - name: Package Build
+        run: tar -czf build.tgz -C dist .
 
-      - name: Upload to server
+      - name: Upload to Server (SCP)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "dist.tgz"
-          target: "/home/${{ secrets.SERVER_USER }}/frontend_deploy"
+          source: "build.tgz"
+          target: "/tmp"
 
-      - name: Deploy on server
+      - name: Extract & Deploy (SSH)
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            set -euo pipefail
-
-            DEPLOY_TGZ="/home/${{ secrets.SERVER_USER }}/frontend_deploy/dist.tgz"
-            WEBROOT="/var/www/html"
-            TMPDIR="/tmp/frontend_dist_$(date +%s)"
-
-            mkdir -p "$TMPDIR"
-            tar -xzf "$DEPLOY_TGZ" -C "$TMPDIR"
-
-            rm -rf "$WEBROOT"/*
-            cp -a "$TMPDIR"/. "$WEBROOT"/
-
+            set -e
+            
+            # 1. Load the target folder from GitHub Variables
+            # (Production = /var/www/html, Staging = /var/www/linktodev_staging)
+            TARGET="${{ vars.WEBROOT_PATH }}"
+            
+            # Safety Check
+            if [ -z "$TARGET" ]; then
+              echo "Error: WEBROOT_PATH variable is missing!"
+              exit 1
+            fi
+            
+            echo "Deploying to: $TARGET"
+            
+            # 2. Create folder if missing (No sudo needed -> You own this!)
+            mkdir -p "$TARGET"
+            
+            # 3. Extract the new files
+            # We overwrite the old files with the new build
+            tar -xzf /tmp/build.tgz -C "$TARGET"
+            
+            # 4. Cleanup temp file
+            rm -f /tmp/build.tgz
+            
+            # 5. Reload Nginx to ensure it catches any config changes (Optional but good practice)
             sudo nginx -t
             sudo systemctl reload nginx
-
-            rm -rf "$TMPDIR"
-            rm -f "$DEPLOY_TGZ"
+            
+            echo "Deployment Complete!"
