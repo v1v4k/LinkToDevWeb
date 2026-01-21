@@ -51,6 +51,8 @@ const Navbar = () => {
             >
               <li>
                 <Link to="/profile">Profile</Link>
+              </li><li>
+                <Link to="/messages">Messages</Link>
               </li>
               <li>
                 <Link to="/connections">Connections</Link>

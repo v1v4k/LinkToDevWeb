@@ -12,6 +12,7 @@ import Settings from "./components/Settings";
 import MfaVerify from "./components/MfaVerify";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MfaProtectedRoute from "./components/MfaProtectedRoute";
+import Messages from "./components/messages/Messages";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
                   <Route element={<MfaProtectedRoute />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/profile" element={<Profile />} />
+                     <Route path="/messages" element={<Messages />} />
                     <Route path="/connections" element={<Connections />} />
                     <Route path="/requests" element={<Requests />} />
                     <Route path="/settings" element={<Settings />} />
