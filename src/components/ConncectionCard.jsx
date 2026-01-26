@@ -37,7 +37,7 @@ const ConncectionCard = ({ data }) => {
         </div>
         {about && <p className="text-xs text-gray-500 line-clamp-1 mt-1">{about}</p>}
       </div>
-      <Link to={`/chat/${_id}`}>
+      <Link to="/messages" state={{ targetUserId: _id }}>
         <button className="btn btn-primary btn-sm md:btn-md">Chat</button>
       </Link>
     </div>

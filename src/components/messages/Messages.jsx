@@ -5,6 +5,7 @@ import ChatSidebar from "./ChatSidebar";
 import ChatWindow from "./ChatWindow";
 import { createSocketConnection } from "../../utils/socket";
 import { BASE_URL } from "../../utils/constants";
+import { useLocation } from "react-router-dom";
 
 const Messages = () => {
   const { _id: userId, firstName } = useSelector((store) => store.user);
@@ -14,6 +15,7 @@ const Messages = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   const socketRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchConnections = async () => {
@@ -108,6 +110,22 @@ const Messages = () => {
       text,
     });
   };
+
+  // navigating from connections component
+  useEffect(()=>{
+    const targetUserId = location.state?.targetUserId;
+
+    if (targetUserId && conversations.length > 0) {
+      const targetUser = conversations.find(
+        (conv) => conv._id === targetUserId
+      );
+
+      if (targetUser) {
+        setSelectedUser(targetUser);
+      }
+    }
+
+  },[conversations, location.state])
 
   return (
     <div className="flex h-full w-full border border-base-300 rounded-lg overflow-hidden bg-base-100 shadow-xl">
