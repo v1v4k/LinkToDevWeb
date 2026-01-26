@@ -7,6 +7,8 @@ const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
   //console.log(messages)
   const messagesEndRef = useRef(null);
 
+
+
   useEffect(() => {
     if (messagesEndRef.current && messages) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });

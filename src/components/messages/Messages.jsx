@@ -65,7 +65,11 @@ const Messages = () => {
         });
 
         const chatMessages = res?.data?.messages.map((msg) => {
-          return { firstName: msg?.senderId?.firstName, text: msg?.text };
+          return {
+            firstName: msg?.senderId?.firstName,
+            text: msg?.text,
+            textedAt: msg?.createdAt,
+          };
         });
 
         // console.log(chatMessages);
@@ -112,20 +116,27 @@ const Messages = () => {
   };
 
   // navigating from connections component
-  useEffect(()=>{
-    const targetUserId = location.state?.targetUserId;
+  useEffect(() => {
+    const targetUser = location.state?.targetUser;
 
-    if (targetUserId && conversations.length > 0) {
-      const targetUser = conversations.find(
-        (conv) => conv._id === targetUserId
-      );
+    if (targetUser) {
+      const existingUser = conversations.find((c) => c._id === targetUser._id);
 
-      if (targetUser) {
-        setSelectedUser(targetUser);
+      if (existingUser) {
+        setSelectedUser(existingUser);
+      } else {
+        const newUser = {
+          _id: targetUser._id,
+          firstName: targetUser.firstName,
+          lastName: targetUser.lastName,
+          photoUrl: targetUser.photoUrl,
+        };
+        setConversations((prev) => [newUser, ...prev]);
+        setSelectedUser(newUser);
       }
+      window.history.replaceState({}, document.title);
     }
-
-  },[conversations, location.state])
+  }, [conversations, location.state]);
 
   return (
     <div className="flex h-full w-full border border-base-300 rounded-lg overflow-hidden bg-base-100 shadow-xl">
@@ -147,7 +158,5 @@ const Messages = () => {
     </div>
   );
 };
-
-
 
 export default Messages;

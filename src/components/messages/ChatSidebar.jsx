@@ -6,6 +6,7 @@ const ChatSidebar = ({
   selectedUser,
   onSelectUser,
 }) => {
+  console.log(conversations)
   return (
     <div className="w-full flex flex-col h-full">
       <div className="p-4 border-b border-base-300 font-bold text-lg ">

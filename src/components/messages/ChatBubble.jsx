@@ -7,20 +7,23 @@ const ChatBubble = ({ message }) => {
 
   const isMe = message?.firstName === user?.firstName;
 
+  const formatTime = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+  console.log(message);
+
   return (
     <div className={`chat ${isMe ? "chat-end" : "chat-start"}`}>
-      <div className="chat-header mb-1">
-        <span className="text-xs font-bold opacity-70 mr-2">
-          {isMe ? user?.firstName : message?.firstName}
-        </span>
-        <time className="text-xs opacity-50">12:45</time>
-      </div>
       <div
         className={`chat-bubble ${isMe ? "chat-bubble-primary" : "chat-bubble-secondary"}`}
       >
         {message.text}
       </div>
-      <div className="chat-footer opacity-50">Delivered</div>
+      <div className="chat-footer opacity-50">
+        <time className="text-xs ">{formatTime(message?.textedAt)}</time>
+      </div>
     </div>
   );
 };
@@ -28,8 +31,9 @@ const ChatBubble = ({ message }) => {
 ChatBubble.propTypes = {
   message: PropTypes.shape({
     text: PropTypes.string.isRequired,
-    firstName: PropTypes.string, 
+    firstName: PropTypes.string,
     senderId: PropTypes.string,
+    textedAt: PropTypes.string,
   }).isRequired,
 };
 
