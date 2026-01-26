@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import ChatBubble from "./ChatBubble";
 import ChatInput from "./ChatInput";
+import PropTypes from "prop-types";
 
 const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
   //console.log(messages)
@@ -47,5 +48,21 @@ const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
   );
 };
 
+ChatWindow.propTypes = {
+  selectedUser: PropTypes.shape({
+    _id: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    photoUrl: PropTypes.string,
+  }),
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      firstName: PropTypes.string,
+    })
+  ),
+  onSendMessage: PropTypes.func.isRequired,
+}; 
 export default ChatWindow;
+
 

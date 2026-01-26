@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const ChatSidebar = ({
   conversations,
   onlineUsers,
@@ -50,6 +52,19 @@ const ChatSidebar = ({
       </div>
     </div>
   );
+};
+
+ChatSidebar.propTypes = {
+  conversations: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      firstName: PropTypes.string.isRequired,
+      photoUrl: PropTypes.string,
+    })
+  ).isRequired,
+  selectedUser: PropTypes.object,
+  onSelectUser: PropTypes.func.isRequired,
+  onlineUsers: PropTypes.array,
 };
 
 export default ChatSidebar;

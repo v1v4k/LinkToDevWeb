@@ -94,7 +94,7 @@ const Messages = () => {
         socketRef.current.off("messageReceived", handleNewMessage);
       }
     };
-  }, [selectedUser, userId]);
+  }, [selectedUser, userId, firstName]);
 
   //  Send Message
   const handleSendMessage = (text) => {

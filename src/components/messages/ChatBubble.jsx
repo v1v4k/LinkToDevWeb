@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 const ChatBubble = ({ message }) => {
@@ -22,6 +23,14 @@ const ChatBubble = ({ message }) => {
       <div className="chat-footer opacity-50">Delivered</div>
     </div>
   );
+};
+
+ChatBubble.propTypes = {
+  message: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    firstName: PropTypes.string, 
+    senderId: PropTypes.string,
+  }).isRequired,
 };
 
 export default ChatBubble;
