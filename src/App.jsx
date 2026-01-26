@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
-import Chat from "./components/Chat";
 import Settings from "./components/Settings";
 import MfaVerify from "./components/MfaVerify";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -33,7 +32,6 @@ const App = () => {
                     <Route path="/connections" element={<Connections />} />
                     <Route path="/requests" element={<Requests />} />
                     <Route path="/settings" element={<Settings />} />
-                    <Route path="/chat/:toUserId" element={<Chat />} />
                   </Route>
                 </Route>
               </Route>
