@@ -1,7 +1,16 @@
+import { useEffect, useRef } from "react";
 import ChatBubble from "./ChatBubble";
 import ChatInput from "./ChatInput";
 
 const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
+  //console.log(messages)
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
   if (!selectedUser) {
     return (
       <div className="flex h-full items-center justify-center font-bold text-gray-500">
@@ -25,9 +34,10 @@ const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
 
       <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-2">
         {messages &&
-          messages.map((message) => (
-            <ChatBubble key={message._id} message={message} />
+          messages.map((message, index) => (
+            <ChatBubble key={index} message={message} />
           ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <div>
@@ -38,3 +48,4 @@ const ChatWindow = ({ selectedUser, messages, onSendMessage }) => {
 };
 
 export default ChatWindow;
+

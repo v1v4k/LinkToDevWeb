@@ -25,8 +25,8 @@ const ChatInput = ({ onSendMessage }) => {
         placeholder="Type a message..."
         className="input input-bordered flex-1 rounded-lg mr-2 outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button 
-        className="btn btn-primary rounded-lg" 
+      <button
+        className="btn btn-primary rounded-lg"
         onClick={handleSendMessage}
       >
         Send

@@ -11,6 +11,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [conversations, setConversations] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const socketRef = useRef(null);
 
@@ -28,9 +29,31 @@ const Messages = () => {
     if (userId) fetchConnections();
   }, [userId]);
 
-  // Handle Selection (Fetch msgs + Join Socket)
   useEffect(() => {
-    if (!selectedUser) return;
+    if (!userId) return;
+
+    // Join socket
+    if (!socketRef.current) {
+      socketRef.current = createSocketConnection(userId);
+      //console.log(socketRef.current);
+    }
+
+    socketRef.current.on("getOnlineUsers", (users) => {
+      setOnlineUsers(users);
+    });
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.off("getOnlineUsers");
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+    };
+  }, [userId]);
+
+  // Handle Selection (Fetch msgs )
+  useEffect(() => {
+    if (!selectedUser || !socketRef.current) return;
 
     // Fetch history
     const fetchMessages = async () => {
@@ -43,19 +66,13 @@ const Messages = () => {
           return { firstName: msg?.senderId?.firstName, text: msg?.text };
         });
 
-       // console.log(chatMessages);
+        // console.log(chatMessages);
         setMessages(chatMessages || []);
       } catch (err) {
         console.error(err);
       }
     };
     fetchMessages();
-
-    // Join socket
-    if (!socketRef.current) {
-      socketRef.current = createSocketConnection();
-      //console.log(socketRef.current);
-    }
 
     // Join the specific room
     socketRef.current.emit("joinChat", {
@@ -66,13 +83,16 @@ const Messages = () => {
 
     // Listen for new messages
     const handleNewMessage = (newMessage) => {
-      console.log("New Msg:",newMessage)
+      //console.log("New Msg:", newMessage);
       setMessages((prev) => [...prev, newMessage]);
     };
+
     socketRef.current.on("messageReceived", handleNewMessage);
 
     return () => {
-      socketRef.current.off("messageReceived", handleNewMessage);
+      if (socketRef.current) {
+        socketRef.current.off("messageReceived", handleNewMessage);
+      }
     };
   }, [selectedUser, userId]);
 
@@ -87,18 +107,7 @@ const Messages = () => {
       targetUserId: selectedUser._id,
       text,
     });
-  
   };
-
-  //  Disconnect on Unmount
-  useEffect(() => {
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-        socketRef.current = null;
-      }
-    };
-  }, []);
 
   return (
     <div className="flex h-full w-full border border-base-300 rounded-lg overflow-hidden bg-base-100 shadow-xl">
@@ -107,6 +116,7 @@ const Messages = () => {
           conversations={conversations}
           selectedUser={selectedUser}
           onSelectUser={setSelectedUser}
+          onlineUsers={onlineUsers}
         />
       </div>
       <div className="flex-1 flex flex-col h-full">
@@ -119,5 +129,7 @@ const Messages = () => {
     </div>
   );
 };
+
+
 
 export default Messages;

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const ChatBubble = ({ message }) => {
-  console.log("from bubble:", message);
+  //console.log("from bubble:", message);
   const user = useSelector((store) => store.user);
 
   const isMe = message?.firstName === user?.firstName;
