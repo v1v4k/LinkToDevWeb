@@ -12,7 +12,7 @@ const ChatBubble = ({ message }) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
-  console.log(message);
+  //console.log(message);
 
   return (
     <div className={`chat ${isMe ? "chat-end" : "chat-start"}`}>

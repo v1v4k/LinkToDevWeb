@@ -1,70 +1,49 @@
-import { useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
+import  { useState } from "react";
 import { useSelector } from "react-redux";
-import { BASE_URL } from "../../utils/constants";
+
+import { MEMBERSHIP_PLANS } from "../../utils/constants";
+import { createCheckoutSession } from "../../services/payment";
+import PremiumCard from "./PremiumCard";
 
 const Premium = () => {
-  const stripe = useStripe();
-  const user = useSelector((store) => store?.user);
-  const userId = user ? user._id : null;
+  const user = useSelector((store) => store.user);
+  const [loadingId, setLoadingId] = useState(null);
 
-  const handleSubscribe = async (priceId) => {
-    if (!stripe || !userId) {
-      console.error(`Stripe.js has not loaded or user is not authenticated.`);
-      return;
-    }
+  const handleBuy = async (planId) => {
+    if (!user) return alert("Please login first!");
+
+    setLoadingId(planId);
     try {
-      const response = await axios.post(
-        `${BASE_URL}/payment/create-checkout-session`,
-        {
-          priceId,
-          userId,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(response);
+      const order = await createCheckoutSession(planId);
+      if (order?.url) {
+        window.location.href = order.url; // Redirect to Stripe
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setLoadingId(null);
     }
   };
+
   return (
-    <div>
-      <div className="flex w-full flex-col lg:flex-row lg:justify-center mt-[8%]">
-        <div className="card bg-base-300 rounded-box grid h-48 w-96 place-items-center p-3">
-          <h1 className="font-bold text-2xl">Silver Membership</h1>
-          <ul>
-            <li>Chat with other people</li>
-            <li>100 requests per day</li>
-            <li>3 months</li>
-          </ul>
-          <button
-            className="btn btn-soft btn-primary "
-            onClick={() =>
-              handleSubscribe(import.meta.env.VITE_STRIPE_SILVER_PRICE_ID)
-            }
-          >
-            Subscribe Silver
-          </button>
-        </div>
-        <div className="divider lg:divider-horizontal"></div>
-        <div className="card bg-base-300 rounded-box grid h-48 w-96  place-items-center p-3">
-          <h1 className="font-bold text-2xl">Gold Membership</h1>
-          <ul>
-            <li>Chat with other people</li>
-            <li>Unlimited requests per day</li>
-            <li>6 months</li>
-          </ul>
-          <button
-            className="btn btn-soft btn-secondary "
-            onClick={() =>
-              handleSubscribe(import.meta.env.VITE_STRIPE_GOLD_PRICE_ID)
-            }
-          >
-            Subscribe Gold
-          </button>
-        </div>
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-extrabold text-gray-900">Upgrade your Plan</h1>
+        <p className="mt-4 text-lg text-gray-600">Unlock exclusive features today.</p>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto">
+        <PremiumCard 
+          plan={MEMBERSHIP_PLANS.SILVER} 
+          onBuy={handleBuy} 
+          loading={loadingId === "silver"} 
+        />
+        <PremiumCard 
+          plan={MEMBERSHIP_PLANS.GOLD} 
+          onBuy={handleBuy} 
+          loading={loadingId === "gold"} 
+        />
       </div>
     </div>
   );

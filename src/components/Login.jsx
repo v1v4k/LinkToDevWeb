@@ -62,14 +62,8 @@ const Login = () => {
   };
 
   return (
-    // FIX 1: Wrapper div centers content in the available space (Outlet)
-    // h-full fills the height provided by Body.jsx
+   
     <div className="flex justify-center items-center w-full h-full bg-base-200">
-      
-      {/* FIX 2: Replaced margins with card styling
-          - w-full max-w-sm: Ensures good width on mobile but stops growing on desktop
-          - shadow-2xl: Adds depth
-      */}
       <div className="card w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body">
           <h2 className="card-title text-2xl justify-center mb-4">
@@ -103,7 +97,7 @@ const Login = () => {
               onChange={(e) => setEmailId(e.target.value)}
             />
             <input
-              type="password" /* FIX: Use password type */
+              type="password" 
               value={password}
               placeholder="Password"
               className="input input-bordered w-full"
@@ -124,7 +118,7 @@ const Login = () => {
             className="text-center mt-4 cursor-pointer hover:underline text-sm opacity-70"
             onClick={() => {
               setIsShowSignIn(!isShowSignIn);
-              setError(""); // Clear error when switching modes
+              setError("");
             }}
           >
             {isShowSignIn
