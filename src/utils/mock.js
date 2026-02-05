@@ -7,7 +7,8 @@ export const MOCK_REQUESTS = [
       photoUrl: "https://randomuser.me/api/portraits/men/1.jpg",
       age: 50,
       gender: "male",
-      about: "I like rockets and cars. Looking for connections to discuss Mars colonization.",
+      about:
+        "I like rockets and cars. Looking for connections to discuss Mars colonization.",
     },
   },
   {
@@ -40,7 +41,8 @@ export const MOCK_REQUESTS = [
       photoUrl: "https://randomuser.me/api/portraits/women/4.jpg",
       age: 24,
       gender: "female",
-      about: "Mother of Dragons. Breaker of Chains. This bio is specifically long to test if your line-clamp-2 css class is working correctly because sometimes people write essays in their bio.",
+      about:
+        "Mother of Dragons. Breaker of Chains. This bio is specifically long to test if your line-clamp-2 css class is working correctly because sometimes people write essays in their bio.",
     },
   },
   {
@@ -62,7 +64,8 @@ export const MOCK_REQUESTS = [
       photoUrl: "https://randomuser.me/api/portraits/men/6.jpg",
       age: 99,
       gender: "male",
-      about: "My name is really long. I hope it truncates correctly in your UI!",
+      about:
+        "My name is really long. I hope it truncates correctly in your UI!",
     },
   },
   {
@@ -141,7 +144,8 @@ export const MOCK_CONNECTIONS = [
     photoUrl: "https://randomuser.me/api/portraits/men/15.jpg",
     age: 56,
     gender: "male",
-    about: "Empowering every person and every organization on the planet to achieve more.",
+    about:
+      "Empowering every person and every organization on the planet to achieve more.",
     skills: ["Cloud Computing", "Leadership", "AI"],
   },
   {
@@ -161,7 +165,8 @@ export const MOCK_CONNECTIONS = [
     photoUrl: "https://randomuser.me/api/portraits/men/20.jpg",
     age: 51,
     gender: "male",
-    about: "Organizing the world's information and making it universally accessible and useful.",
+    about:
+      "Organizing the world's information and making it universally accessible and useful.",
     skills: ["Product Management", "Software Engineering", "Strategy"],
   },
   {
@@ -181,7 +186,8 @@ export const MOCK_CONNECTIONS = [
     photoUrl: "https://randomuser.me/api/portraits/women/50.jpg",
     age: 85,
     gender: "female",
-    about: "It's easier to ask forgiveness than it is to get permission. COBOL creator.",
+    about:
+      "It's easier to ask forgiveness than it is to get permission. COBOL creator.",
     skills: ["COBOL", "Debugging", "Navy Admiral"],
   },
   {
@@ -211,7 +217,8 @@ export const MOCK_CONNECTIONS = [
     photoUrl: "https://randomuser.me/api/portraits/men/75.jpg",
     age: 30,
     gender: "male",
-    about: "Ethereum co-founder. Interested in math, cryptography, and mechanism design.",
+    about:
+      "Ethereum co-founder. Interested in math, cryptography, and mechanism design.",
     skills: ["Blockchain", "Cryptography", "Solidity"],
   },
   {
@@ -231,7 +238,41 @@ export const MOCK_CONNECTIONS = [
     photoUrl: "https://randomuser.me/api/portraits/women/88.jpg",
     age: 101,
     gender: "female",
-    about: "Calculated the trajectory for the 1969 Apollo 11 flight to the Moon.",
+    about:
+      "Calculated the trajectory for the 1969 Apollo 11 flight to the Moon.",
     skills: ["Orbital Mechanics", "Mathematics", "NASA"],
   },
 ];
+
+export const mockMessages = [
+  {
+    _id: "m1",
+    senderId: 1, // Matches Elon Musk's ID
+    text: "We are launching the rocket tomorrow.",
+    createdAt: "10:00 AM",
+  },
+  {
+    _id: "m2",
+    senderId: "my-id-123", // Matches LOGGED_IN_USER_ID
+    text: "That is awesome! Can I come?",
+    createdAt: "10:02 AM",
+  },
+  {
+    _id: "m3",
+    senderId: 1, // Matches Elon Musk's ID
+    text: "Only if you bring the coffee. ☕",
+    createdAt: "10:03 AM",
+  },
+  {
+    _id: "m4",
+    senderId: "my-id-123", // Matches LOGGED_IN_USER_ID
+    text: "Deal. I'll bring the good stuff.",
+    createdAt: "10:05 AM",
+  },
+];
+ 
+export const dummyUsers = [
+    { id: 1, fullName: "Elon Musk" },
+    { id: 2, fullName: "Jeff Bezos" },
+    { id: 3, fullName: "Mark Zuckerberg" },
+  ];

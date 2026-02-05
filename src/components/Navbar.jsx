@@ -28,6 +28,11 @@ const Navbar = () => {
         <Link to={"/"} className=" text-xl font-bold">
           LinkToDev
         </Link>
+        {user && (
+          <div className="font-semibold ml-8 text-lg hover:scale-110 transition-transform duration-200  cursor-pointer">
+             <Link to="/messages">Messages</Link>
+          </div>
+        )}
       </div>
       {user && (
         <div className="flex-none flex items-center gap-4">
@@ -65,7 +70,9 @@ const Navbar = () => {
                 <Link to="/settings">Settings</Link>
               </li>
               <li>
-                <button onClick={handleLogout} className="text-red-500">Logout</button>
+                <button onClick={handleLogout} className="text-red-500">
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

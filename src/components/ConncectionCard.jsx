@@ -4,18 +4,14 @@ import PropTypes from "prop-types";
 const ConncectionCard = ({ data }) => {
   if (!data) return null;
 
-  const { firstName, lastName, age, gender, photoUrl, skills, about, _id } = data;
+  const { firstName, lastName, age, gender, photoUrl, skills, about, _id } =
+    data;
 
   return (
     <div className="flex bg-base-100 hover:bg-base-200 transition-colors rounded-xl shadow-sm border border-base-200 p-4 w-full gap-4 items-center">
-
       <div className="avatar">
         <div className="w-16 h-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-          <img 
-            src={photoUrl} 
-            alt="profile"
-            className="object-cover" 
-          />
+          <img src={photoUrl} alt="profile" className="object-cover" />
         </div>
       </div>
       <div className="flex-grow overflow-hidden">
@@ -26,18 +22,26 @@ const ConncectionCard = ({ data }) => {
           {age && `${age}, `} {gender}
         </p>
         <div className="flex flex-wrap gap-1">
-          {skills && skills.slice(0, 3).map((skill, index) => (
-            <span key={index} className="badge badge-ghost badge-sm text-xs">
-              {skill}
-            </span>
-          ))}
+          {skills &&
+            skills.slice(0, 3).map((skill, index) => (
+              <span key={index} className="badge badge-ghost badge-sm text-xs">
+                {skill}
+              </span>
+            ))}
           {skills && skills.length > 3 && (
-            <span className="text-xs text-gray-400 self-center">+{skills.length - 3}</span>
+            <span className="text-xs text-gray-400 self-center">
+              +{skills.length - 3}
+            </span>
           )}
         </div>
-        {about && <p className="text-xs text-gray-500 line-clamp-1 mt-1">{about}</p>}
+        {about && (
+          <p className="text-xs text-gray-500 line-clamp-1 mt-1">{about}</p>
+        )}
       </div>
-      <Link to={`/chat/${_id}`}>
+      <Link
+        to="/messages"
+        state={{ targetUser: { _id, firstName, lastName, photoUrl } }}
+      >
         <button className="btn btn-primary btn-sm md:btn-md">Chat</button>
       </Link>
     </div>
@@ -47,7 +51,7 @@ const ConncectionCard = ({ data }) => {
 ConncectionCard.propTypes = {
   data: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string, 
+    lastName: PropTypes.string,
     age: PropTypes.number,
     gender: PropTypes.string,
     photoUrl: PropTypes.string,
