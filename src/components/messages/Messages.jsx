@@ -23,7 +23,8 @@ const Messages = () => {
         const res = await axios.get(`${BASE_URL}/user/connections`, {
           withCredentials: true,
         });
-        setConversations(res?.data.data);
+        //console.log(res?.data)
+        setConversations(res?.data?.data);
       } catch (err) {
         console.error(err);
       }
@@ -64,7 +65,7 @@ const Messages = () => {
           withCredentials: true,
         });
 
-        const chatMessages = res?.data?.messages.map((msg) => {
+        const chatMessages = res?.data?.data?.messages.map((msg) => {
           return {
             firstName: msg?.senderId?.firstName,
             text: msg?.text,

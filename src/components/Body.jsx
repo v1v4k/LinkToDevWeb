@@ -23,8 +23,8 @@ const Body = () => {
       });
 
       if (!response.data) return;
-      //console.log(response.data);
-      dispatch(addUser(response.data));
+      //console.log(response?.data?.data);
+      dispatch(addUser(response?.data?.data));
       //navigate("/");
     } catch (error) {
       if (error.status === 401 && location.pathname !== "/login") {
