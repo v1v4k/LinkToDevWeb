@@ -5,6 +5,7 @@ import axios from "axios";
 import { removeUser } from "../redux/userSlice";
 import { clearFeed } from "../redux/feedSlice";
 import SearchBar from "./SearchBar";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -39,6 +40,7 @@ const Navbar = () => {
           <div className="flex-none mx-4">
             <SearchBar />
           </div>
+          <ThemeToggle />
           <div className="font-semibold text-lg">{user.firstName}</div>
           <div className="dropdown dropdown-end mx-4">
             <div
