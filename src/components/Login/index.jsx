@@ -13,14 +13,14 @@ const Login = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
 
- useEffect(() => {
-    if (user) navigate("/")
-  }, [user, navigate])
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user, navigate]);
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-base-100 px-4">
-        <div className="bg-base-200 border border-base-300 rounded-2xl shadow-2xl p-8 w-full max-w-sm">
+      <div className="flex-1 flex items-center justify-center bg-base-100 px-4 py-6 overflow-y-auto">
+        <div className="bg-base-200 border border-base-300 rounded-2xl shadow-2xl p-5 sm:p-6 lg:p-8 w-full max-w-[380px] my-auto">
           <AuthTabs activeTab={activeTab} onChange={setActiveTab} />
           {activeTab === "signin" ? (
             <SignInForm oauthError={oauthError} />
