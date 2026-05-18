@@ -1,85 +1,112 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
-import axios from "axios";
-import { removeUser } from "../redux/userSlice";
-import { clearFeed } from "../redux/feedSlice";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
+import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { handleSignout } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const location = useLocation();
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
-      dispatch(removeUser());
-      dispatch(clearFeed());
-      return navigate("/login");
-    } catch (error) {
-      console.error("Error occurred while logout:", error);
-    }
+  const onLogout = async () => {
+    setIsLoggingOut(true);
+    await handleSignout();
+    setIsLoggingOut(false);
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-md px-4 relative z-50">
-      <div className="flex-1">
-        <Link to={"/"} className=" text-xl font-bold">
-          LinkToDev
-        </Link>
-        {user && (
-          <div className="font-semibold ml-8 text-lg hover:scale-110 transition-transform duration-200  cursor-pointer">
-             <Link to="/messages">Messages</Link>
-          </div>
-        )}
-      </div>
-      {user && (
-        <div className="flex-none flex items-center gap-4">
-          <div className="flex-none mx-4">
-            <SearchBar />
-          </div>
-          <ThemeToggle />
-          <div className="font-semibold text-lg">{user.firstName}</div>
-          <div className="dropdown dropdown-end mx-4">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar hover:bg-base-200"
+    <div className="relative z-50">
+
+      {/* Top accent line */}
+      <div className="h-[2px] w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-80" />
+
+      {/* Navbar */}
+      <div className="navbar bg-base-200 border-b border-base-300 px-6">
+
+        <div className="flex-1">
+          <Link to="/" className="text-base font-extrabold tracking-tight">
+            LinkToDev
+          </Link>
+          {user && (
+            <Link
+              to="/messages"
+              className={`hidden sm:block text-sm font-semibold ml-8
+                transition-colors duration-200
+                ${location.pathname === "/messages"
+                  ? "text-primary"
+                  : "text-base-content/70 hover:text-base-content"
+                }`}
             >
-              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img alt="profile" src={user.photoUrl} />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content font-medium bg-base-100 rounded-box mt-4 w-52 p-2 shadow-lg z-[100] gap-1"
-            >
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/connections">Connections</Link>
-              </li>
-              <li>
-                <Link to="/requests">Requests</Link>
-              </li>
-              <li>
-                <Link to="/premium">Premium</Link>
-              </li>
-              <li>
-                <Link to="/settings">Settings</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout} className="text-red-500">
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
+              Messages
+            </Link>
+          )}
         </div>
-      )}
+
+        <div className="flex-none flex items-center gap-4">
+          {user && (
+            <div className="hidden md:block">
+              <SearchBar />
+            </div>
+          )}
+
+          <ThemeToggle />
+
+          {user && (
+            <>
+              <div className="hidden md:block text-sm font-semibold">
+                {user.firstName}
+              </div>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar hover:bg-base-300"
+                >
+                  <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img
+                      alt="profile"
+                      src={user.photoUrl}
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.nextSibling.style.display = "flex";
+                      }}
+                    />
+                    <span
+                      style={{ display: "none" }}
+                      className="w-full h-full flex items-center justify-center bg-primary text-primary-content font-bold text-sm"
+                    >
+                      {user.firstName?.[0]}{user.lastName?.[0]}
+                    </span>
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content font-medium bg-base-100 rounded-box mt-4 w-52 p-2 shadow-lg z-[100] gap-1"
+                >
+                  <li><Link to="/profile">Profile</Link></li>
+                  <li><Link to="/connections">Connections</Link></li>
+                  <li><Link to="/requests">Requests</Link></li>
+                  <li><Link to="/premium">Premium</Link></li>
+                  <li><Link to="/settings">Settings</Link></li>
+                  <li>
+                    <button
+                      onClick={onLogout}
+                      disabled={isLoggingOut}
+                      className="text-error"
+                    >
+                      {isLoggingOut ? "Logging out..." : "Logout"}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
+        </div>
+
+      </div>
     </div>
   );
 };

@@ -13,7 +13,6 @@ import Messages from "./components/messages/Messages";
 import Premium from "./components/payments/Premium";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentCancel from "./components/payments/PaymentCancel";
-import ThemeToggle from "./components/ThemeToggle";
 
 const App = () => {
   return (
