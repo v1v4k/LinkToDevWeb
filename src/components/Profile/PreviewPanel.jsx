@@ -1,17 +1,16 @@
 import PropTypes from "prop-types";
-import FeedCard from "../FeedCard";
+import ProfileCard from "../shared/ProfileCard";
 
-const PreviewPanel = ({ values }) => {
-  return (
-    <div className="w-2/3">
-      <h1 className="text-center text-2xl font-bold opacity-50 mb-2">
-        Live Preview
-      </h1>
-      <FeedCard user={values} />
+const PreviewPanel = ({ values }) => (
+  <div className="flex flex-col items-center gap-3 w-full px-4">
+    <p className="text-sm font-bold text-base-content/40 uppercase tracking-widest">
+      Live Preview
+    </p>
+    <div className=" w-[300px] md:w-[50%] md:max-w-[420px]  rounded-2xl overflow-hidden shadow-2xl ">
+      <ProfileCard user={values} />
     </div>
-  );
-};
-
+  </div>
+);
 PreviewPanel.propTypes = {
   values: PropTypes.object.isRequired,
 };
