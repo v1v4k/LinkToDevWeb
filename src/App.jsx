@@ -5,7 +5,7 @@ import Profile from "./components/Profile";
 import Feed from "./components/Feed";
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
-import Connections from "./components/Connections";
+import Connections from "./components/Connections/index.jsx";
 import Requests from "./components/Requests";
 import Settings from "./components/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
