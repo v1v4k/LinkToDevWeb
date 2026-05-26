@@ -10,9 +10,9 @@ import Requests from "./components/Requests";
 import Settings from "./components/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Messages from "./components/messages/Messages";
-import Premium from "./components/payments/Premium";
-import PaymentSuccess from "./components/payments/PaymentSuccess";
-import PaymentCancel from "./components/payments/PaymentCancel";
+import Premium from "./components/Premium/index.jsx";
+import PaymentSuccess from "./components/Premium/PaymentSuccess.jsx";
+import PaymentCancel from "./components/Premium/PaymentCancel.jsx";
 import DeveloperProfile from "./components/DeveloperProfile/index.jsx";
 
 const App = () => {

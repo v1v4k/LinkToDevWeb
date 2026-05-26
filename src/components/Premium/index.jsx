@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { MEMBERSHIP_PLANS } from "../../utils/constants";
@@ -27,22 +27,27 @@ const Premium = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="h-full overflow-y-auto bg-base-100 py-12 px-4">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900">Upgrade your Plan</h1>
-        <p className="mt-4 text-lg text-gray-600">Unlock exclusive features today.</p>
+        <h1 className="text-4xl font-extrabold text-base-content">
+          Upgrade your Plan
+        </h1>
+        <p className="mt-4 text-lg text-base-content/60">
+          Unlock exclusive features today.
+        </p>
       </div>
-
-      <div className="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto">
-        <PremiumCard 
-          plan={MEMBERSHIP_PLANS.SILVER} 
-          onBuy={handleBuy} 
-          loading={loadingId === "silver"} 
+      <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 max-w-3xl mx-auto">
+        <PremiumCard
+          plan={MEMBERSHIP_PLANS.SILVER}
+          onBuy={handleBuy}
+          loading={loadingId === "silver"}
+          isCurrentPlan={user?.membershipType === "silver"}
         />
-        <PremiumCard 
-          plan={MEMBERSHIP_PLANS.GOLD} 
-          onBuy={handleBuy} 
-          loading={loadingId === "gold"} 
+        <PremiumCard
+          plan={MEMBERSHIP_PLANS.GOLD}
+          onBuy={handleBuy}
+          loading={loadingId === "gold"}
+          isCurrentPlan={user?.membershipType === "gold"}
         />
       </div>
     </div>
