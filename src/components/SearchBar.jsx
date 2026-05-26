@@ -60,7 +60,7 @@ const SearchBar = () => {
         <div className="absolute mt-2 w-64 bg-base-100 shadow-lg rounded-lg z-50 max-h-64 overflow-y-auto">
           {results.map((user) => (
             <Link
-              to={"/"}
+              to={`/developer/${user._id}`}
               key={user._id}
               onClick={handleResultClick}
               className="p-3 hover:bg-base-200 cursor-pointer flex items-center gap-3 transition-colors text-base-content"

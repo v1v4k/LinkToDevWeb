@@ -13,6 +13,7 @@ import Messages from "./components/messages/Messages";
 import Premium from "./components/payments/Premium";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentCancel from "./components/payments/PaymentCancel";
+import DeveloperProfile from "./components/DeveloperProfile/index.jsx";
 
 const App = () => {
   return (
@@ -30,6 +31,10 @@ const App = () => {
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<Feed />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/developer/:toUserId"
+                  element={<DeveloperProfile />}
+                />
                 <Route path="/messages" element={<Messages />} />
                 <Route path="/connections" element={<Connections />} />
                 <Route path="/requests" element={<Requests />} />
