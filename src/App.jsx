@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
-import Feed from "./components/Feed";
+
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
 import Connections from "./components/Connections/index.jsx";
@@ -14,6 +14,7 @@ import Premium from "./components/Premium/index.jsx";
 import PaymentSuccess from "./components/Premium/PaymentSuccess.jsx";
 import PaymentCancel from "./components/Premium/PaymentCancel.jsx";
 import DeveloperProfile from "./components/DeveloperProfile/index.jsx";
+import Feed from "./components/Feed/index.jsx";
 
 const App = () => {
   return (
