@@ -8,19 +8,21 @@ const useFeed = () => {
   const user = useSelector((store) => store.user);
   const feed = useSelector((store) => store.feed);
 
-  useEffect(() => {
-    const fetchFeed = async () => {
-      try {
-        const res = await getFeed();
+ 
+    useEffect(() => {
+  if (!user) return 
 
-        dispatch(addFeed(res?.data));
-      } catch (err) {
-        console.error("Error fetching feed:", err);
-      }
-    };
+  const fetchFeed = async () => {
+    try {
+      const res = await getFeed()
+      dispatch(addFeed(res?.data))
+    } catch (err) {
+      console.error("Error fetching feed:", err)
+    }
+  }
 
-    fetchFeed();
-  }, [user, feed, dispatch]);
+  fetchFeed()
+}, [user, dispatch]) 
 
     const handleSwipe = async (direction, targetUserId) => {
     const status = direction === "right" ? "interested" : "ignored"
