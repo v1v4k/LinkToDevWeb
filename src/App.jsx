@@ -5,14 +5,14 @@ import Profile from "./components/Profile";
 import Feed from "./components/Feed";
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
-import Connections from "./components/Connections";
+import Connections from "./components/Connections/index.jsx";
 import Requests from "./components/Requests";
 import Settings from "./components/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Messages from "./components/messages/Messages";
-import Premium from "./components/payments/Premium";
-import PaymentSuccess from "./components/payments/PaymentSuccess";
-import PaymentCancel from "./components/payments/PaymentCancel";
+import Messages from "./components/Messages/index.jsx";
+import Premium from "./components/Premium/index.jsx";
+import PaymentSuccess from "./components/Premium/PaymentSuccess.jsx";
+import PaymentCancel from "./components/Premium/PaymentCancel.jsx";
 import DeveloperProfile from "./components/DeveloperProfile/index.jsx";
 
 const App = () => {
