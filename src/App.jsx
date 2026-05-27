@@ -9,7 +9,7 @@ import Connections from "./components/Connections/index.jsx";
 import Requests from "./components/Requests";
 import Settings from "./components/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Messages from "./components/messages/Messages";
+import Messages from "./components/Messages/index.jsx";
 import Premium from "./components/Premium/index.jsx";
 import PaymentSuccess from "./components/Premium/PaymentSuccess.jsx";
 import PaymentCancel from "./components/Premium/PaymentCancel.jsx";

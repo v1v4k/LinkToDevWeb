@@ -7,3 +7,5 @@ export const getConnectionStatus = (userId) =>
 
 export const sendConnectionRequest = (status, toUserId) =>
   axiosInstance.post(`/sendConnectionRequest/${status}/${toUserId}`);
+
+export const getConnections = () => axiosInstance.get("/user/connections");
