@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearResults } from "../redux/searchSlice";
-import { searchUsers } from "../redux/searchThunk";
+import { clearResults } from "../../redux/searchSlice";
+import { searchUsers } from "../../redux/searchThunk";
 import { Link } from "react-router-dom";
 
 const SearchBar = () => {
