@@ -15,6 +15,7 @@ import PaymentSuccess from "./components/Premium/PaymentSuccess.jsx";
 import PaymentCancel from "./components/Premium/PaymentCancel.jsx";
 import DeveloperProfile from "./components/DeveloperProfile/index.jsx";
 import Feed from "./components/Feed/index.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/premium" element={<Premium />} />
               </Route>
+              <Route path="*" element={<ErrorPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
