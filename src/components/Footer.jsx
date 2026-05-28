@@ -1,9 +1,22 @@
 const Footer = () => {
   return (
-    <footer className="footer w-full bg-white text-neutral-content p-1  flex justify-center border-t border-base-300">
-      <p>LinkToDev</p> 
-      <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
-    </footer>
+    <div className="relative">
+      {/* Footer content */}
+      <footer
+        className="w-full bg-base-200 border-t border-base-300 py-2 px-4
+    flex flex-col sm:flex-row items-center justify-center
+    gap-0.5 sm:gap-2 text-xs text-base-content/40 font-medium"
+      >
+        <span>LinkToDev</span>
+        <span className="hidden sm:block">·</span>
+        <span>
+          Copyright © {new Date().getFullYear()} - All rights reserved
+        </span>
+      </footer>
+
+      {/* Bottom accent line */}
+      <div className="h-[2px] w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-80" />
+    </div>
   );
 };
 

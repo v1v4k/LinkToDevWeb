@@ -1,45 +1,20 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
-import { BASE_URL } from "../utils/constants";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/userSlice";
 import { useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import Navbar from "./Navbar";
 
 const Body = () => {
-  const user = useSelector((store) => store.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
- 
+  const { fetchUser } = useAuth();
 
   useEffect(() => {
-     const fetchUser = async () => {
-    try {
-      if (user) return;
-      const response = await axios.get(`${BASE_URL}/profile`, {
-        withCredentials: true,
-      });
-
-      if (!response.data) return;
-      //console.log(response.data);
-      dispatch(addUser(response.data));
-      //navigate("/");
-    } catch (error) {
-      if (error.status === 401 && location.pathname !== "/login") {
-        navigate("/login");
-      }
-      console.error("Error occurred while fetching feed:", error);
-    }
-  };
     fetchUser();
-  }, [dispatch, navigate, user, location.pathname]);
+  }, [fetchUser]);
 
   return (
-    <div className="flex flex-col h-[100dvh] w-full overflow-hidden">
+    <div className="flex flex-col h-[100dvh] w-full">
       <Navbar />
-      <div className="flex-1  overflow-hidden ">
+      <div className="flex-1 min-h-0  flex flex-col ">
         <Outlet />
       </div>
       <Footer />

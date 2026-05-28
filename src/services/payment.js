@@ -8,7 +8,8 @@ export const createCheckoutSession = async (membershipType) => {
       { membershipType },
       { withCredentials: true },
     );
-    return response.data;
+    //console.log(response?.data)
+    return response?.data?.data;
   } catch (error) {
     throw new Error(
       error.response?.data?.error || "Payment initialization failed",
