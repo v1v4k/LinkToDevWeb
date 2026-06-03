@@ -1,119 +1,141 @@
-# LinkToDev - Frontend Client
+# 🚀 LinkToDev — Frontend
 
-The official React frontend for **LinkToDev**, a professional networking platform for developers.  
-It provides a swipe-based discovery experience, connection management, and real-time chat.
+The official React frontend for **LinkToDev**, a professional networking platform for developers.
+Swipe-based developer discovery, connection management, and real-time chat.
 
 ![Frontend Deploy](https://github.com/v1v4k/LinkToDevWeb/actions/workflows/deploy.yml/badge.svg)
-🌍 **Live Application:** https://www.linktodev.com
+![React](https://img.shields.io/badge/react-18-blue)
+![Docker](https://img.shields.io/badge/docker-containerized-blue)
+![Vite](https://img.shields.io/badge/build-vite-purple)
 
-## ✨ Overview
-LinkToDev allows developers to:
-- Discover other developers using a swipe-based feed
-- Search developers by first name using the global search bar
-- Send and review connection requests
-- Maintain a professional network
-- Chat with connected users in real time
-- Manage authentication and profile data
+🌍 **Live:** https://www.linktodev.com
+
+---
+
+## ✨ Features
+
+| Feature                | Description                                                |
+| :--------------------- | :--------------------------------------------------------- |
+| 🔍 Developer Discovery | Tinder-style swipe feed — right to connect, left to ignore |
+| 🔎 Search              | Search developers by name in real time                     |
+| 🤝 Connections         | View, accept, reject connection requests                   |
+| 💬 Real-time Chat      | One-to-one messaging via Socket.io                         |
+| 🔐 Auth                | Email/password + GitHub OAuth                              |
+| 👤 Profile             | Edit profile, skills, bio, photo with live preview         |
+| 💳 Premium             | Stripe-powered membership upgrades                         |
+| 🌗 Theme               | Dark/light mode toggle                                     |
+| 📱 Mobile              | Fully responsive — WhatsApp-style chat on mobile           |
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer            | Technology                   |
+| :--------------- | :--------------------------- |
+| Framework        | React 18 (Vite)              |
+| State            | Redux Toolkit                |
+| Routing          | React Router DOM v6          |
+| Styling          | Tailwind CSS + DaisyUI       |
+| Forms            | React Hook Form + Zod        |
+| HTTP             | Axios (custom instance)      |
+| Real-time        | Socket.io Client             |
+| Animations       | Framer Motion                |
+| Containerization | Docker (multi-stage + Nginx) |
+
+---
 
 ## 📸 Screenshots
-### Login
-<img width="955" alt="Login Page" src="https://github.com/user-attachments/assets/8363e781-e202-4188-9e6c-1bca2310daed" />
 
-### Feed (Swipe-based Discovery)
-<img width="1920" alt="Feed Page" src="https://github.com/user-attachments/assets/cbb47486-5f71-4032-980d-87e201ed5d06" />
+### Sign In / Sign Up
 
-### Search
-<img width="1920" alt="Search Bar" src="https://github.com/user-attachments/assets/aed58592-1211-4e91-a70d-16492f059337" />
+<img width="1911" height="SignIn Page" alt="Image" src="https://github.com/user-attachments/assets/f958e2fe-f508-4eca-ab62-530376d60889" />
+
+### Profile
+
+<img width="1913" height="904" alt="Profile" src="https://github.com/user-attachments/assets/bcbd0dc7-65c5-419a-a4a6-27b09a5ada7e" />
+
+### Feed
+
+<img width="1920" height="892" alt="Feed Search" src="https://github.com/user-attachments/assets/2f9a5f54-6c12-4b46-830e-ee8f0fb7f5c1" />
+
+### Messages
+
+<img width="1909" height="903" alt="Messages" src="https://github.com/user-attachments/assets/05b1cb62-92ce-4ba1-a8ec-3ed82643468d" />
 
 ### Connections
-<img width="953" alt="Connections Page" src="https://github.com/user-attachments/assets/82f39919-dd38-4c03-bdb1-e667df318d77" />
 
-### Chat
-<img width="959" alt="Chat Interface" src="https://github.com/user-attachments/assets/68217701-10b2-47e4-9a28-ff22c5bdf2ab" />
+<img width="1916" height="897" alt="Connections" src="https://github.com/user-attachments/assets/c2f16366-0a2d-49c2-9ace-e643868cf963" />
 
 ### Requests
-<img width="957" alt="Requests Page" src="https://github.com/user-attachments/assets/fc385866-bd0c-4a6d-8d96-882e4daf64ee" />
 
-## 🧩 Core Features
-### 🔍 Developer Discovery
-- Tinder-style swipe interface
-- Swipe right to show interest
-- Swipe left to ignore profiles
-- Instant UI updates
-### 🔎 Developer Search
-- Global search bar available in the navigation bar
-- Search developers by first name in real time
-- Results update dynamically as the user types
-### 🔗 Connections & Requests
-- View incoming connection requests
-- Accept or reject requests
-- Manage accepted connections
-### 💬 Real-time Chat
-- One-to-one messaging between connected users
-- Powered by Socket.io
-### 🔐 Authentication & Profile
-- Secure login and logout
-- Profile viewing and editing
-- Auth state managed with Redux Toolkit
+<img width="1907" height="899" alt="Requests" src="https://github.com/user-attachments/assets/12097da4-ff6a-42e1-a3a4-c59d20962ff4" />
 
+### Premium
 
-## 🛠 Tech Stack
-- **Frontend:** React (Vite)
-- **State Management:** Redux Toolkit
-- **Styling:** Tailwind CSS + DaisyUI
-- **Routing:** React Router DOM
-- **HTTP Client:** Axios
-- **Real-time:** Socket.io Client
+<img width="1923" height="905" alt="Premium" src="https://github.com/user-attachments/assets/03a4d2ec-2710-4f2c-8c44-687cb18eb0aa" />
+
+---
+
+## 📂 Project Structure
+
+```plaintext
+src/
+├── components/      → feature-based UI components
+├── hooks/           → custom hooks (useAuth, useChat, useFeed...)
+├── services/        → API layer (axiosInstance, userApi, chatApi...)
+├── redux/           → store, slices
+├── schemas/         → Zod validation schemas
+├── utils/           → constants, socket, helpers
+└── App.jsx          → routes
+```
+
+---
 
 ## 🚀 Running Locally
-### Prerequisites
-- Node.js ≥ 18
-- Backend API running
-### 1️⃣ Backend Setup (Required)
-Clone and start the backend:
-    git clone https://github.com/v1v4k/LinkToDev.git
-    cd LinkToDev
-    npm install
-    npm run dev
-Backend runs on:
-    http://localhost:4444
-### 2️⃣ Frontend Setup
-    git clone https://github.com/v1v4k/LinkToDevWeb.git
-    cd LinkToDevWeb
-    npm install
-    npm run dev
-Open the app at:
-    http://localhost:5173
 
-## 🌍 Environment & API Handling
-This frontend follows an **environment-agnostic API strategy**.
-### Local Development
-- API requests are sent to:  
-    http://localhost:4444
-### Production
-- API requests use relative paths (e.g. `/api/login`)
-- Requests are proxied by **Nginx**
-No `.env` file is required for API configuration.
+### With Docker (recommended)
 
-## 🚢 Deployment Architecture
-The frontend is deployed on a **Google Cloud Platform (GCP) Virtual Machine**.
-### Infrastructure Overview
-- **Web Server:** Nginx  
-  - Serves static `dist/` assets  
-  - Proxies API requests to the backend
-- **Process Management:** PM2 (backend)
-- **Security & SSL:** Cloudflare
-- **CI/CD:** GitHub Actions
+```bash
+docker build -t linktodev-frontend .
+docker run -p 3000:3000 linktodev-frontend
+```
 
-## 🔁 CI/CD Pipeline
-Automated deployments are handled via **GitHub Actions**.
-| Branch | Environment | Trigger |       Deployment Type         |
-|--------|-------------|---------|-------------------------------|
-| `dev`  | Staging     |  Push   |        **Automatic**          |
-| `main` | Production  |  Push   |  **Manual Approval Required** |
-### Workflow
-1.  **Build:** React app is compiled on every push.
-2.  **Deploy (Dev):** Automatically transfers assets to the VM.
-3.  **Deploy (Prod):** Waits for manual approval in GitHub, then transfers assets.
-4.  **Serve:** Nginx serves the updated `dist/` folder.
+### Without Docker
 
+```bash
+npm install
+npm run dev
+```
+
+Open at: http://localhost:5173
+
+> Backend must be running. See [LinkToDev Backend](https://github.com/v1v4k/LinkToDev)
+
+---
+
+## 🚢 Deployment & CI/CD
+
+Full deployment architecture, CI/CD pipeline, branch strategy, and rollback procedures are documented in the infrastructure repository.
+
+👉 [LinkToDev Infrastructure](https://github.com/v1v4k/linktodev-infra)
+
+---
+
+## 📈 Future Improvements
+
+- TypeScript migration
+- Unit tests (Vitest + React Testing Library)
+- Redis-backed feed caching
+- GitHub profile integration
+- Posts/blogs feature
+- Notifications system
+- PWA support
+
+---
+
+## 🔗 Related Repositories
+
+| Repo                                                                 | Description                  |
+| :------------------------------------------------------------------- | :--------------------------- |
+| [LinkToDev Backend](https://github.com/v1v4k/LinkToDev)              | Node.js backend API          |
+| [LinkToDev Infrastructure](https://github.com/v1v4k/linktodev-infra) | Docker, Nginx, CI/CD configs |
